@@ -1,10 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!--    <color name="purple_200">#FFBB86FC</color>
+        <color name="purple_500">#FF6200EE</color>
+        <color name="purple_700">#FF3700B3</color>
+        <color name="teal_200">#FF03DAC5</color>
+        <color name="teal_700">#FF018786</color>
+        <color name="black">#FF000000</color>
+        <color name="white">#FFFFFFFF</color>-->
+
+    <color name="colorPrimary">#00d5ff</color>
+    <color name="colorPrimaryVariant">#128197</color>
+
+    <color name="colorSecondary">#03DAC5</color>
+    <color name="colorSecondaryVariant">#106058</color>
+
+    <color name="colorPrimaryDark">#128197</color>
+    <color name="colorPrimaryDarkVariant">#012739</color>
+
+    <color name="colorSecondaryDark">#275467</color>
+    <color name="colorSecondaryVariantDark">#193542</color>
+
+    <color name="primary">#00d5ff</color>
+    <color name="mGradientStart">#00ffdd</color>
+    <color name="mGradientEnd">#00ccff</color>
+    <color name="lightGray">#a2b0ba</color>
+    <color name="gGradientStart">#37474f</color>
+    <color name="gGradientEnd">#6d74ac</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name="yellow">#edcc61</color>
+    <color name="color_divide_light">#1FFFFFFF</color>
+
+    <color name="primaryTextColor">#5E91A8</color>
+    <color name="secondaryTextColor">#002c40</color>
 </resources>
