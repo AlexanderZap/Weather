@@ -5,10 +5,9 @@ import ru.zapashnii.weather.navigation.ViewRouter
 import javax.inject.Inject
 
 /** ViewModel стартовой Activity*/
-class StartActivityViewModel() : ViewModel() {
-
-    @Inject
-    lateinit var viewRouter: ViewRouter
+class StartActivityViewModel @Inject constructor(
+    private val viewRouter: ViewRouter,
+) : ViewModel() {
 
     /**
      * TODO Показать поле для ввода города

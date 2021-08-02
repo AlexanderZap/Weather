@@ -7,20 +7,20 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /** Клас навигации по приложению */
-//@Singleton
+@Singleton
 class ViewRouter @Inject constructor() {
 
-    private var currentActivity: AppCompatActivity? = null
+    private var currentActivity: AppCompatActivity = AppCompatActivity()
 
     /** Запускает Activity погаза погоды TODO с параметром = название города*/
     fun openWeatherByCity() {
-            val intent = Intent(currentActivity, WeatherActivity::class.java)
-        currentActivity?.startActivity(intent)
+        val intent = Intent(currentActivity, WeatherActivity::class.java)
+        currentActivity.startActivity(intent)
     }
 
     /** Запускает Activity погаза погоды TODO с параметром = гео локация*/
     fun openWeatherByGPS() {
         val intent = Intent(currentActivity, WeatherActivity::class.java)
-        currentActivity?.startActivity(intent)
+        currentActivity.startActivity(intent)
     }
 }
