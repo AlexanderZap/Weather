@@ -8,7 +8,7 @@ import javax.inject.Singleton
 
 /** Граф зависимостей */
 @Singleton
-@Component(modules = [AppModule::class])
+@Component(modules = [AppModule::class, NetworkModule::class])
 interface ApplicationComponent {
     fun inject(activity: StartActivity)
     fun inject(activity: WeatherActivity)

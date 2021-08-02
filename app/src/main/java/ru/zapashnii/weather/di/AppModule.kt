@@ -19,49 +19,18 @@ class AppModule {
     @Provides
     fun provideStartActivityViewModel(
         viewRouter: ViewRouter,
-    ): StartActivityViewModel {
-        return StartActivityViewModel(viewRouter)
-    }
+    ): StartActivityViewModel =
+        StartActivityViewModel(viewRouter)
+
 
     @Provides
     fun provideWeatherActivityViewModel(
         weatherApi: WeatherApi,
-    ): WeatherActivityViewModel {
-        return WeatherActivityViewModel(weatherApi)
-    }
+    ): WeatherActivityViewModel =
+        WeatherActivityViewModel(weatherApi)
+
 
     @Provides
-    fun provideViewRouter(): ViewRouter {
-        return ViewRouter()
-    }
-
-    @Provides
-    @Singleton
-    fun provideHttpLoggingInterceptor(): HttpLoggingInterceptor =
-        HttpLoggingInterceptor().apply {
-            this.level = HttpLoggingInterceptor.Level.BODY
-        }
-
-    @Provides
-    @Singleton
-    fun provideOkhttpClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
-    ): OkHttpClient =
-        OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .build()
-
-    @Provides
-    @Singleton
-    fun provideWeatherRetrofit(okHttpClient: OkHttpClient): Retrofit =
-        Retrofit.Builder()
-            .baseUrl(BuildConfig.API_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-
-    @Provides
-    @Singleton
-    fun provideWeatherApi(retrofit: Retrofit): WeatherApi =
-        retrofit.create(WeatherApi::class.java)
+    fun provideViewRouter(): ViewRouter =
+        ViewRouter()
 }

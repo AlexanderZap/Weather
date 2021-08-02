@@ -5,9 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.zapashnii.weather.network.WeatherApi
 import javax.inject.Inject
@@ -18,21 +15,21 @@ class WeatherActivityViewModel @Inject constructor(
 ) : ViewModel() {
 
     /**  */
-    private var _endDate = MutableLiveData<String>().apply { value = "start" }
-    var endDate: LiveData<String> = _endDate
+    private var _lable = MutableLiveData<String>().apply { value = "start" }
+    var lable: LiveData<String> = _lable
 
     /**
      * TODO
      *
      */
     fun getWeatherByCity() {
-        _endDate.value = "click"
+        _lable.value = "click"
         viewModelScope.launch {
             try {
-                 weatherApi.getWeatherByCity(
+                 weatherApi.getWeatherByCityName(
                     name = "Krasnodar"
                 )
-                _endDate.value = "Successful"
+                _lable.value = "Successful"
             } catch (e: Exception) {
                 Log.e("ERROR", "Exception during request -> ${e.localizedMessage}")
             }
