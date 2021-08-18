@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="ru.zapashnii.weather.presentation.weather_activity.WeatherActivityViewModel" />
+            type="ru.zapashnii.weather.presentation.search_weather.SearchWeatherViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -71,7 +71,6 @@
             app:layout_constraintBottom_toTopOf="@+id/bt_find_by_city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:text="@{viewModel.lable}"
             tools:text="start" />
 
         <TextView
@@ -82,7 +81,6 @@
             android:layout_gravity=""
             android:layout_margin="16dp"
             android:layout_weight="1"
-            android:onClick="@{() -> viewModel.getWeatherByCity()}"
             android:text="go"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

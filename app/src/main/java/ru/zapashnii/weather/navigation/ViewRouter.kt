@@ -1,8 +1,7 @@
 package ru.zapashnii.weather.navigation
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
-import ru.zapashnii.weather.presentation.weather_activity.WeatherActivity
+import ru.zapashnii.weather.presentation.base_activity.BaseActivity
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,17 +9,34 @@ import javax.inject.Singleton
 @Singleton
 class ViewRouter @Inject constructor() {
 
-    private var currentActivity: AppCompatActivity = AppCompatActivity()
+    private var currentActivity: BaseActivity? = null
+
+    var progressStack: Int = 0
+
+    fun setCurrentActivity(activity: BaseActivity?) {
+        currentActivity = activity
+    }
+
+    fun removeCurrentActivity(baseActivity: BaseActivity) {
+        if (currentActivity == baseActivity) currentActivity = null
+    }
 
     /** Запускает Activity погаза погоды TODO с параметром = название города*/
     fun openWeatherByCity() {
-        val intent = Intent(currentActivity, WeatherActivity::class.java)
-        currentActivity.startActivity(intent)
+        startWeatherActivity(BaseActivity.SEARCH_WEATHER)
+    }
+
+    private fun startWeatherActivity(type: String) {
+        if (currentActivity != null) {
+            val intent = Intent(currentActivity, BaseActivity::class.java)
+            intent.putExtra(BaseActivity.TYPE_ACTIVITY, type)
+            currentActivity?.startActivity(intent)
+        }
     }
 
     /** Запускает Activity погаза погоды TODO с параметром = гео локация*/
-    fun openWeatherByGPS() {
+/*    fun openWeatherByGPS() {
         val intent = Intent(currentActivity, WeatherActivity::class.java)
-        currentActivity.startActivity(intent)
-    }
+        currentActivity?.startActivity(intent)
+    }*/
 }

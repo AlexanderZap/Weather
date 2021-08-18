@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="ru.zapashnii.weather.presentation.start_activity.StartActivityViewModel" />
+            type="ru.zapashnii.weather.presentation.start_fragment.StartViewModel" />
     </data>
 
     <LinearLayout
