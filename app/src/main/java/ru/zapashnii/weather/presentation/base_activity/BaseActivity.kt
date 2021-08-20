@@ -4,10 +4,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import ru.zapashnii.weather.R
+import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.navigation.ViewRouter
 import ru.zapashnii.weather.presentation.search_weather.SearchWeatherFragment
 import ru.zapashnii.weather.presentation.start_fragment.StartFragment
 import ru.zapashnii.weather.utils.Utils
+import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
 
 /** Базовый экран на котором будут создоваться/подменяться фрагменты */
@@ -17,6 +19,7 @@ class BaseActivity : AppCompatActivity() {
         const val TYPE_ACTIVITY = "TYPE_ACTIVITY"
 
         const val SEARCH_WEATHER = "SEARCH_WEATHER"
+        const val CITY_NAME = "CITY_NAME"
         const val START_FRAGMENT = "START_FRAGMENT"
     }
 
@@ -30,11 +33,16 @@ class BaseActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_base)
 
+        appComponent.inject(this)
+
         viewRouter.setCurrentActivity(this)
 
+        replaceFragment(StartFragment.newInstance())
+
         when (intent.getStringExtra(TYPE_ACTIVITY)) {
-            START_FRAGMENT -> addFragment(StartFragment.newInstance())
-            SEARCH_WEATHER -> replaceFragment(SearchWeatherFragment.newInstance())
+            SEARCH_WEATHER -> replaceFragment(SearchWeatherFragment.newInstance(
+                cityName = intent.getStringExtra(CITY_NAME) ?: ""
+            ))
         }
     }
 

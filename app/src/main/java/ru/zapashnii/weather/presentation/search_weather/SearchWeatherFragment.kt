@@ -10,19 +10,31 @@ import androidx.lifecycle.ViewModelProvider
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.SearchWeatherFragmentBinding
 import ru.zapashnii.weather.presentation.start_fragment.StartViewModel
+import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
 
 /** Фрагмент погаза погоды */
 class SearchWeatherFragment : Fragment() {
 
     companion object {
-        fun newInstance() = SearchWeatherFragment()
+        fun newInstance(cityName: String): SearchWeatherFragment {
+            return SearchWeatherFragment().apply {
+                this.cityName = cityName
+            }
+        }
     }
+
+    private lateinit var cityName: String
 
     @Inject
     lateinit var viewModelFactory: SearchWeatherViewModel.Factory
 
     private var binding: SearchWeatherFragmentBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireContext().appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,5 +50,10 @@ class SearchWeatherFragment : Fragment() {
         binding?.lifecycleOwner = viewLifecycleOwner
 
         return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding?.viewModel?.loadData(cityName)
+        setHasOptionsMenu(true)
     }
 }

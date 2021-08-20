@@ -22,14 +22,15 @@ class ViewRouter @Inject constructor() {
     }
 
     /** Запускает Activity погаза погоды TODO с параметром = название города*/
-    fun openWeatherByCity() {
-        startWeatherActivity(BaseActivity.SEARCH_WEATHER)
+    fun openWeatherByCity(cityName: String) {
+        startWeatherActivity(BaseActivity.SEARCH_WEATHER, cityName)
     }
 
-    private fun startWeatherActivity(type: String) {
+    private fun startWeatherActivity(type: String, cityName: String) {
         if (currentActivity != null) {
             val intent = Intent(currentActivity, BaseActivity::class.java)
             intent.putExtra(BaseActivity.TYPE_ACTIVITY, type)
+            intent.putExtra(BaseActivity.CITY_NAME, cityName)
             currentActivity?.startActivity(intent)
         }
     }

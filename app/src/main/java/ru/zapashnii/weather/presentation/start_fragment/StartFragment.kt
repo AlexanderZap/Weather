@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.databinding.DataBindingUtil
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.StartFragmentBinding
+import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
 
 /** Фрагмент стартового экрана */
@@ -20,6 +21,11 @@ class StartFragment : Fragment() {
     lateinit var viewModelFactory: StartViewModel.Factory
 
     private var binding: StartFragmentBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        requireContext().appComponent.inject(this)
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

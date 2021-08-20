@@ -14,7 +14,7 @@ class StartViewModel(
     }
 
     fun clickFindByCity() {
-        viewRouter.openWeatherByCity()
+        viewRouter.openWeatherByCity("London")
     }
 
     /** Фабрика [StartViewModel] */
