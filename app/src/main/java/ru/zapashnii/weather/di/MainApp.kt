@@ -4,7 +4,11 @@ import android.app.Application
 
 class MainApp : Application() {
 
-    lateinit var applicationComponent: ApplicationComponent
+    companion object {
+        lateinit var instance: MainApp
+
+    }
+        lateinit var applicationComponent: ApplicationComponent
 
     override fun onCreate() {
         super.onCreate()
