@@ -1,13 +1,13 @@
-package ru.zapashnii.weather.presentation.base_activity
+package ru.zapashnii.weather.presentation.ui.base_activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.zapashnii.weather.R
-import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.navigation.ViewRouter
-import ru.zapashnii.weather.presentation.search_weather.SearchWeatherFragment
-import ru.zapashnii.weather.presentation.start_fragment.StartFragment
+import ru.zapashnii.weather.presentation.ui.search_weather.SearchWeatherFragment
+import ru.zapashnii.weather.presentation.ui.start_fragment.StartFragment
 import ru.zapashnii.weather.utils.Utils
 import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
@@ -93,5 +93,14 @@ class BaseActivity : AppCompatActivity() {
             .add(R.id.mainContainer, fragment, tag + fragmentsStack)
             .addToBackStack(tag + fragmentsStack)
             .commit()
+    }
+
+    /**
+     * Показать BottomSheetDialogFragment со списком элементов
+     *
+     * @param fragment      [BottomSheetDialogFragment]
+     */
+    fun showBottomSheet(fragment: BottomSheetDialogFragment) {
+        fragment.show(supportFragmentManager, null)
     }
 }

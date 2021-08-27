@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.start_fragment
+package ru.zapashnii.weather.presentation.ui.start_fragment
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle

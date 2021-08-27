@@ -1,6 +1,9 @@
 package ru.zapashnii.weather.utils
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.util.Base64
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import java.lang.NumberFormatException
@@ -54,4 +57,12 @@ fun String.convertToDouble(): Double {
  */
 fun String.removeSpaces(): String {
     return this.replace(" ", "").replace("\\s".toRegex(), "")
+}
+
+/**
+ * Преобразовать Base64 строку в [Bitmap]
+ */
+fun String.toBitmapFromBase64(): Bitmap {
+    val decodedString: ByteArray = Base64.decode(this, Base64.DEFAULT)
+    return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
 }

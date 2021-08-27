@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
         <variable
             name="viewModel"
-            type="ru.zapashnii.weather.presentation.search_weather.SearchWeatherViewModel" />
+            type="ru.zapashnii.weather.presentation.ui.search_weather.SearchWeatherViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -48,7 +49,7 @@
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
-        <!--<androidx.viewpager.widget.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -60,31 +61,61 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/searchView"
-            app:layout_constraintVertical_bias="0.0" />-->
+            app:layout_constraintVertical_bias="0.0"
+            bind:itemsWeatherViewPagerAdapter="@{viewModel.listWeather}" />
 
-        <TextView
-            android:id="@+id/endDate"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:background="?selectableItemBackground"
-            app:layout_constraintBottom_toTopOf="@+id/bt_find_by_city"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="start" />
+        <!--        Выпадающий список
+        <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_period"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.Dense.ExposedDropdownMenu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dim_16_dp"
+                    android:hint="@string/cashback_period"
+                    android:textColorHint="@color/colorPrimary"
+                    app:boxBackgroundColor="@color/on_colorPrimary"
+                    app:hintTextColor="@color/colorPrimary"
+                    app:layout_constraintStart_toStartOf="@id/tv_title"
+                    app:layout_constraintTop_toBottomOf="@id/tv_noCashBack"
+                    app:startIconDrawable="@drawable/ic_date_range_blue"
+                    app:startIconTint="@color/colorPrimary"
+                    bind:itemsSpinnerCashBack="@{viewModel.listDateForPeriod}"
+                    bind:visibility="@{!viewModel.isNotCashBack()}">
 
-        <TextView
-            android:id="@+id/bt_find_by_city"
-            style="@style/Button"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity=""
-            android:layout_margin="16dp"
-            android:layout_weight="1"
-            android:text="go"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+                    <AutoCompleteTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:inputType="none"
+                        android:textColor="@color/colorPrimary"
+                        android:textColorLink="@color/colorPrimary"
+                        app:text="@{viewModel.date}"
+                        bind:clickItemSpinner="@{viewModel.setItemSpinner}" />
+                </com.google.android.material.textfield.TextInputLayout>-->
+
+
+        <!--  <TextView
+              android:id="@+id/endDate"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginBottom="16dp"
+              android:background="?selectableItemBackground"
+              app:layout_constraintBottom_toTopOf="@+id/bt_find_by_city"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent"
+              tools:text="start" />
+
+          <TextView
+              android:id="@+id/bt_find_by_city"
+              style="@style/Button"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_gravity=""
+              android:layout_margin="16dp"
+              android:layout_weight="1"
+              android:text="go"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintStart_toStartOf="parent" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.search_weather
+package ru.zapashnii.weather.presentation.ui.search_weather
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.SearchWeatherFragmentBinding
-import ru.zapashnii.weather.presentation.start_fragment.StartViewModel
 import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
 

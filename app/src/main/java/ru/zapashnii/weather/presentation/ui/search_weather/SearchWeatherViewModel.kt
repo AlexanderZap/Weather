@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.search_weather
+package ru.zapashnii.weather.presentation.ui.search_weather
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.*
