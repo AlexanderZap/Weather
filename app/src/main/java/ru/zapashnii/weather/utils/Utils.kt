@@ -40,13 +40,13 @@ object Utils {
         return imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
-    /** Перенаправить на Play Market */
+    /** Перенаправить на Play Market или AppGallery */
     fun redirectToPlayMarket() {
         val context = MainApp.instance.applicationContext
         val packageName = context?.packageName ?: ""
         val intent = Intent(Intent.ACTION_VIEW)
         if (!context.isGooglePlayServicesAvailable()) {
-            intent.data = Uri.parse("https://play.google.com/store/apps/details?id=$packageName")
+            intent.data = Uri.parse("appmarket://details?id=$packageName")
         } else {
             intent.data = Uri.parse("market://details?id=$packageName")
         }
