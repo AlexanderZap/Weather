@@ -1,5 +1,6 @@
 package ru.zapashnii.weather.di
 
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -10,6 +11,7 @@ import ru.zapashnii.weather.BuildConfig
 import ru.zapashnii.weather.network.WeatherApi
 import javax.inject.Singleton
 
+/** Класс создания сетевых объектов */
 @Module
 class NetworkModule {
 
@@ -35,7 +37,7 @@ class NetworkModule {
         Retrofit.Builder()
             .baseUrl(BuildConfig.API_URL)
             .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
             .build()
 
     @Provides
