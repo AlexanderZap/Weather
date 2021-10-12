@@ -5,10 +5,14 @@ import ru.zapashnii.weather.domain.network.ISearchWeatherService
 import ru.zapashnii.weather.network.WeatherApi
 import javax.inject.Inject
 
-/** Сервис для получения данных о погоде */
+/**
+ * Сервис для получения данных о погоде
+ *
+ * @property api            интерфейс с договорами(контрактами) получения данных с сервера
+ */
 class SearchWeatherService @Inject constructor(
-    private val api: WeatherApi
-): ISearchWeatherService {
+    private val api: WeatherApi,
+) : ISearchWeatherService {
 
     /**
      * Получить данные о погоде
@@ -17,6 +21,6 @@ class SearchWeatherService @Inject constructor(
      * @return                  список с погодой [Weather]
      */
     override suspend fun getWeatherByCityName(cityName: String): List<Weather> {
-       return api.getWeatherByCityName(cityName)
+        return api.getWeatherByCityName(cityName)
     }
 }
