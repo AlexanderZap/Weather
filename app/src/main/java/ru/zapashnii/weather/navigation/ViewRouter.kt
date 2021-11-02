@@ -1,12 +1,18 @@
 package ru.zapashnii.weather.navigation
 
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
+import androidx.core.app.ActivityCompat
 import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import javax.inject.Inject
 import javax.inject.Singleton
+
+/** Код запроса */
+const val PERMISSION_ID = 1
 
 /** Клас навигации по приложению */
 @Singleton
@@ -24,11 +30,20 @@ class ViewRouter @Inject constructor() {
         if (currentActivity == baseActivity) currentActivity = null
     }
 
-    /** Запускает Activity погаза погоды TODO с параметром = название города*/
+    /**
+     * Открыть экран покза погоды
+     *
+     * @param cityName      название города
+     */
     fun openWeatherByCity(cityName: String) {
         startWeatherActivity(BaseActivity.SEARCH_WEATHER, cityName)
     }
 
+    /**
+     * Открыть экран покза погоды
+     *
+     * @param cityName      название города
+     */
     private fun startWeatherActivity(type: String, cityName: String) {
         if (currentActivity != null) {
             val intent = Intent(currentActivity, BaseActivity::class.java)
@@ -38,11 +53,16 @@ class ViewRouter @Inject constructor() {
         }
     }
 
-    /** Запускает Activity погаза погоды TODO с параметром = гео локация*/
-/*    fun openWeatherByGPS() {
-        val intent = Intent(currentActivity, WeatherActivity::class.java)
-        currentActivity?.startActivity(intent)
-    }*/
+    /** Запросить разрешения на получения местоположения */
+    fun requestPermission() {
+        currentActivity?.let {
+            ActivityCompat.requestPermissions(
+                it,
+                arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
+                PERMISSION_ID
+            )
+        }
+    }
 
     /**
      * Показать BottomSheetDialogFragment со списком элементов

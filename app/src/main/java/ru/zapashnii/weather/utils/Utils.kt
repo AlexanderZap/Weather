@@ -1,13 +1,19 @@
 package ru.zapashnii.weather.utils
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import ru.zapashnii.weather.di.MainApp
+import java.util.*
 
+/** Утилиты */
 object Utils {
 
     /**
@@ -53,4 +59,44 @@ object Utils {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context?.startActivity(intent)
     }
+
+    /**
+     * Получить название города
+     *
+     * @param latitude          широта
+     * @param longitude         долгота
+     * @return                  название города или ""
+     */
+    fun getCityName(latitude: Double, longitude: Double): String {
+        val geoCoder = Geocoder(MainApp.instance.applicationContext, Locale.getDefault())
+        val address = geoCoder.getFromLocation(latitude, longitude, 3)
+
+        return address[0].locality ?: ""
+    }
+
+    /**
+     * Получить название страны
+     *
+     * @param latitude          широта
+     * @param longitude         долгота
+     * @return                  название страны или ""
+     */
+    fun getCountryName(latitude: Double, longitude: Double): String {
+        val geoCoder = Geocoder(MainApp.instance.applicationContext, Locale.getDefault())
+        val address = geoCoder.getFromLocation(latitude, longitude, 3)
+
+        return address[0].countryName ?: ""
+    }
+
+    /**
+     * Проверка разрешений на получения местоположения
+     *
+     * @return      True, если есть разрешения
+     */
+    fun checkPermission(): Boolean =
+        ActivityCompat.checkSelfPermission(MainApp.instance.applicationContext,
+            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+                ActivityCompat.checkSelfPermission(MainApp.instance.applicationContext,
+                    Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+
 }

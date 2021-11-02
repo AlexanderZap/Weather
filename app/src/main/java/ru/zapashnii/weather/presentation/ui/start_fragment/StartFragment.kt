@@ -1,12 +1,20 @@
 package ru.zapashnii.weather.presentation.ui.start_fragment
 
-import androidx.lifecycle.ViewModelProvider
+import android.content.Context
+import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
-import android.view.*
-import androidx.fragment.app.Fragment
+import android.os.Looper
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import com.google.android.gms.location.*
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.StartFragmentBinding
+import ru.zapashnii.weather.utils.Utils
 import ru.zapashnii.weather.utils.appComponent
 import javax.inject.Inject
 
@@ -39,6 +47,63 @@ class StartFragment : Fragment() {
             ViewModelProvider(this, viewModelFactory).get(StartViewModel::class.java)
         binding?.lifecycleOwner = viewLifecycleOwner
 
+        binding?.viewModel?.isGetLastLocation?.observe(viewLifecycleOwner, { if (it) getLastLocation() })
         return binding?.root
+    }
+
+    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
+    /** Получить местоположение */
+    private fun getLastLocation() {
+        if (Utils.checkPermission()) {
+            if (isLocationEnabled()) {
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
+                    val location: Location? = task.result
+                    if (location == null) {
+
+                        val locationRequest = LocationRequest.create().apply {
+                            interval = 0
+                            fastestInterval = 0
+                            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+                            numUpdates = 1
+                        }
+                        fusedLocationProviderClient =
+                            LocationServices.getFusedLocationProviderClient(activity)
+
+                        fusedLocationProviderClient.requestLocationUpdates(
+                            locationRequest,
+                            locationCallback,
+                            Looper.myLooper())
+                    } else {
+                        binding?.viewModel?.openWeatherByCity(Utils.getCityName(location.latitude,
+                            location.longitude))
+                    }
+                }
+            } else {
+                binding?.viewModel?.requestLocationEnabled()
+            }
+        } else {
+            binding?.viewModel?.requestPermission()
+        }
+    }
+
+    /** Результат получения места положения */
+    private val locationCallback = object : LocationCallback() {
+        override fun onLocationResult(locationResult: LocationResult) {
+            val lastLocation: Location = locationResult.lastLocation
+            binding?.viewModel?.openWeatherByCity(Utils.getCityName(lastLocation.latitude,
+                lastLocation.longitude))
+        }
+    }
+
+    /**
+     * Проверка включен ли GPS
+     *
+     * @return      True, если включен
+     */
+    private fun isLocationEnabled(): Boolean {
+        val locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER)
     }
 }

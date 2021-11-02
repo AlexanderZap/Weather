@@ -7,9 +7,7 @@ import java.io.File
 import java.io.IOException
 import java.io.InputStream
 
-/**
- * Утилита для работы с файлом: создание и запись
- */
+/** Утилита для работы с файлом: создание и запись */
 object FileUtil {
 
     /**
