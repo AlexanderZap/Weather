@@ -1,11 +1,16 @@
 package ru.zapashnii.weather.utils
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
+import ru.zapashnii.weather.R
+import ru.zapashnii.weather.di.MainApp
 import java.lang.NumberFormatException
 
 /**
@@ -65,4 +70,17 @@ fun String.removeSpaces(): String {
 fun String.toBitmapFromBase64(): Bitmap {
     val decodedString: ByteArray = Base64.decode(this, Base64.DEFAULT)
     return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.size)
+}
+
+/**
+ * Копировать текст в буфер обмена. После копирования показывает уведомление в виде [Toast]
+ * @param label видимый пользователю label скопированных данных
+ */
+fun String.copyInClipboard(label: String) {
+    val context = MainApp.instance
+    val clipboardManager = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+    val clipData = ClipData.newPlainText(label, this)
+    clipboardManager.setPrimaryClip(clipData)
+
+    Toast.makeText(context, context.getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
 }

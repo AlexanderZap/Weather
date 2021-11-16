@@ -3,4 +3,5 @@
     <string name="find_by_city">По городу</string>
     <string name="find_by_gps">По GPS</string>
     <string name="title_search">SearchWeather</string>
+    <string name="text_copied_to_clipboard">Текст скопирован</string>
 </resources>
