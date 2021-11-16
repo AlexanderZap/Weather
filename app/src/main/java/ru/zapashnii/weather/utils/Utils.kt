@@ -2,9 +2,11 @@ package ru.zapashnii.weather.utils
 
 import android.Manifest
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
+import android.location.LocationManager
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -99,4 +101,15 @@ object Utils {
                 ActivityCompat.checkSelfPermission(MainApp.instance.applicationContext,
                     Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
+    /**
+     * Проверка включен ли GPS
+     *
+     * @return      True, если включен
+     */
+     fun isLocationEnabled(): Boolean {
+        val context = MainApp.instance
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
+            LocationManager.NETWORK_PROVIDER)
+    }
 }

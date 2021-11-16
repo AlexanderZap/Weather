@@ -1,8 +1,6 @@
 package ru.zapashnii.weather.presentation.ui.start_fragment
 
-import android.content.Context
 import android.location.Location
-import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.view.LayoutInflater
@@ -56,7 +54,7 @@ class StartFragment : Fragment() {
     /** Получить местоположение */
     private fun getLastLocation() {
         if (Utils.checkPermission()) {
-            if (isLocationEnabled()) {
+            if (Utils.isLocationEnabled()) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
                     val location: Location? = task.result
                     if (location == null) {
@@ -73,7 +71,8 @@ class StartFragment : Fragment() {
                         fusedLocationProviderClient.requestLocationUpdates(
                             locationRequest,
                             locationCallback,
-                            Looper.myLooper())
+                            Looper.myLooper()
+                        )
                     } else {
                         binding?.viewModel?.openWeatherByCity(Utils.getCityName(location.latitude,
                             location.longitude))
@@ -94,16 +93,5 @@ class StartFragment : Fragment() {
             binding?.viewModel?.openWeatherByCity(Utils.getCityName(lastLocation.latitude,
                 lastLocation.longitude))
         }
-    }
-
-    /**
-     * Проверка включен ли GPS
-     *
-     * @return      True, если включен
-     */
-    private fun isLocationEnabled(): Boolean {
-        val locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
-            LocationManager.NETWORK_PROVIDER)
     }
 }
