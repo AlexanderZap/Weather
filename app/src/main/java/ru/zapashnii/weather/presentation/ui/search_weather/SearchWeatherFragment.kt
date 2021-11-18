@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.SearchWeatherFragmentBinding
@@ -24,6 +25,22 @@ class SearchWeatherFragment : Fragment() {
     }
 
     private lateinit var cityName: String
+
+/*  Способы привязать viewModel к Fragment
+    @Inject
+    lateinit var factory: SearchWeatherViewModel.IFactory
+
+    private val viewModel: SearchWeatherViewModel by viewModels { factory.create(cityName) }
+    и теперь можно вызывать методы viewModel
+    viewModel.loadData()
+
+    @Inject
+    lateinit var factory: SearchWeatherViewModel.Factory
+
+    private val viewModel: SearchWeatherViewModel by viewModels { factory }
+    и теперь можно вызывать методы viewModel
+    viewModel.loadData()
+    */
 
     @Inject
     lateinit var viewModelFactory: SearchWeatherViewModel.Factory
@@ -49,10 +66,30 @@ class SearchWeatherFragment : Fragment() {
         binding?.lifecycleOwner = viewLifecycleOwner
 
         return binding?.root
+
+        // Fragment + Jetpack compose
+        // return inflater.inflate(R.layout.search_weather_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding?.viewModel?.loadData(cityName)
         setHasOptionsMenu(true)
+
+        /* Fragment + Jetpack compose
+        view.findViewById<ComposeView>(R.id.container).setContent {
+            KubanKreditAppTheme {
+                val cvvCard by viewModel.cvvCard.observeAsState()
+                val requisitesCard by viewModel.requisitesCard.observeAsState()
+                Вызываем Compose fun
+                Form(
+                    numberCard = numberCard,
+                    cvvCard = cvvCard,
+                    requisitesCard = requisitesCard,
+                    onBackClick = viewModel::back,
+                )
+            }
+        }
+
+         */
     }
 }
