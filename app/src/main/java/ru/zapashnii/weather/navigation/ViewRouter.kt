@@ -3,6 +3,9 @@ package ru.zapashnii.weather.navigation
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
+import android.net.Uri
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
 import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.IListItemField
@@ -64,6 +67,33 @@ class ViewRouter @Inject constructor() {
         }
     }
 
+    /**
+     * Открывает приложение, способное обработать url, иначе показывает уведомление.
+     * @param url           ссылка
+     * @param errorMessage  текст ошибку в случае неудачи
+     */
+    fun showLink(url: String, errorMessage: String? = null) {
+        if (currentActivity == null) return
+        val uri = Uri.parse(url)
+        val intent = getLinkIntent(uri)
+        if (isNotNeedCheckLink(uri) || intent.resolveActivity(currentActivity?.packageManager
+                ?: return) != null
+        ) {
+            currentActivity?.startActivity(intent)
+        } else {
+            showError(errorMessage = errorMessage ?: "Нет приложения способного открыть $url")
+        }
+    }
+
+    /** Получить интент для открытия ссылки */
+    private fun getLinkIntent(uri: Uri?) = Intent(Intent.ACTION_VIEW).apply { data = uri }
+
+    /** Проверить, что ссылку можно открыть без проверки наличия приложения назначения */
+    private fun isNotNeedCheckLink(uri: Uri?) = uri?.scheme == "https" || uri?.scheme == "http"
+
+    fun showError(errorMessage: String) {
+        Toast.makeText(MainApp.instance.applicationContext, errorMessage, LENGTH_SHORT).show()
+    }
     /**
      * Показать BottomSheetDialogFragment со списком элементов
      * @param title                 id заголовка

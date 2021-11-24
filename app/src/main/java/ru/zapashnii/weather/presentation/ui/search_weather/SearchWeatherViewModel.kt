@@ -29,6 +29,11 @@ class SearchWeatherViewModel(
         }
     }
 
+    /** Нажатие на иконку инфо перенаправляющая на сайт openweathermap */
+    fun clickInfo() {
+        viewRouter.showLink("https://openweathermap.org")
+    }
+
     /** Фабрика [SearchWeatherViewModel] */
     class Factory @Inject constructor(
         private val viewRouter: ViewRouter,
