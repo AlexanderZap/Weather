@@ -63,16 +63,16 @@ class SearchWeatherViewModel(
         }
     }*/
 
-    /** Фабрика создания [SearchWeatherViewModel.Factory] генерируется даггером */
-    @AssistedFactory
-    interface IFactory {
-        /**
-         * Созать фабрику [SearchWeatherViewModel.Factory]
-         * @param cityName    Название города
-         * @return            фабрика [SearchWeatherViewModel.Factory]
-         */
-        fun create(
-            @Assisted("cityName") cityName: String,
-        ): Factory
-    }
+//    /** Фабрика создания [SearchWeatherViewModel.Factory] генерируется даггером */
+//    @AssistedFactory
+//    interface IFactory {
+//        /**
+//         * Созать фабрику [SearchWeatherViewModel.Factory]
+//         * @param cityName    Название города
+//         * @return            фабрика [SearchWeatherViewModel.Factory]
+//         */
+//        fun create(
+//            @Assisted("cityName") cityName: String,
+//        ): Factory
+//    }
 }
