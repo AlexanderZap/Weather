@@ -6,6 +6,7 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.textfield.TextInputLayout
+import ru.zapashnii.weather.utils.inputmask.MaskedTextChangedListener
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.Weather
@@ -149,4 +151,52 @@ fun observeDownloadingState(view: FloatingActionButton, isDownloadingState: Bool
             .load(picture)
             .into(view)
     }
+}
+
+/**
+ * Адаптер слушает прокрутку [RecyclerView] и выполняет методы
+ *
+ * @param view              [RecyclerView]
+ * @param onTopScroll       прокрутка вверх
+ * @param onBottomScroll    прокрутка вниз
+ */
+@BindingAdapter("bind:topScroll", "bind:bottomScroll", requireAll = true)
+fun setScrollListener(view: RecyclerView, onTopScroll: () -> Unit, onBottomScroll: () -> Unit) {
+    view.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            if (dy < 0) {
+                onTopScroll.invoke()
+            } else if (dy > 0) {
+                onBottomScroll.invoke()
+            }
+
+        }
+
+        override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+            super.onScrollStateChanged(recyclerView, newState)
+        }
+    })
+}
+
+/**
+ * Адаптер скрывает FloatingActionButton в зависимости от [isVisible]
+ *
+ * @param view          [FloatingActionButton]
+ * @param isVisible     TRUE - показать, FALSE - скрыть
+ */
+@BindingAdapter("bind:isVisible")
+fun showFab(view: FloatingActionButton, isVisible: Boolean) {
+    if (isVisible) view.show() else view.hide()
+}
+
+/**
+ * Адаптер добаления маски ввода для [EditText]
+ *
+ * @param view      [EditText]
+ * @param format    маска
+ */
+@BindingAdapter("bind:maskEditText")
+fun mask(view: EditText, format: String) {
+    val mask = MaskedTextChangedListener(format, view, null)
+    view.addTextChangedListener(mask)
 }
