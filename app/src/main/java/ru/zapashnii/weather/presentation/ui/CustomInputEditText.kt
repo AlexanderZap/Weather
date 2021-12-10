@@ -301,7 +301,7 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
     }
 
     /**
-     * Создать [InputFilter]
+     * Создать фильтр [InputFilter]
      *
      * @return  [InputFilter]
      */
