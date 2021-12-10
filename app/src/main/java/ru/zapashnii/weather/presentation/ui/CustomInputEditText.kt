@@ -1,7 +1,6 @@
 package ru.zapashnii.weather.presentation.ui
 
 import android.content.Context
-import android.os.Build
 import android.text.Editable
 import android.text.InputFilter
 import android.text.Spanned
@@ -205,9 +204,13 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
         }
     }
 
+    /**
+     * Определить какую ошибку показать, если [text] пуст, то скрыть ошибку
+     *
+     * @param text  введеный текст
+     */
     private fun checkError(text: String = this.text?.toString() ?: "") {
         when {
-            //isRequiredFieldEmpty(text) -> showError(this.error)
             !isTextCorrect(text) -> showError(this.error)
             else -> hideError()
         }
@@ -218,7 +221,7 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
      *
      * @param error текст ошибки
      */
-    fun showError(@StringRes error: Int) {
+    private fun showError(@StringRes error: Int) {
         showError(context?.getString(error) ?: "")
     }
 
@@ -228,7 +231,6 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
      * @param error текст ошибки
      */
     private fun showError(error: String) {
-        //parentTextInputLayout?.isHelperTextEnabled  = false
         parentTextInputLayout?.error = error
         parentTextInputLayout?.isErrorEnabled = true
         checkCounter()
@@ -243,13 +245,13 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
         }
     }
 
-    /** Показать счетчик символов*/
+    /** Показать счетчик символов */
     private fun showCounter(maxLength: Int) {
         parentTextInputLayout?.counterMaxLength = maxLength
         parentTextInputLayout?.isCounterEnabled = true
     }
 
-    /** Скрыть счетчик символов*/
+    /** Скрыть счетчик символов */
     private fun hideCounter() {
         parentTextInputLayout?.isCounterEnabled = false
     }
@@ -295,9 +297,7 @@ open class CustomInputEditText : TextInputEditText, View.OnFocusChangeListener, 
      * @param color ресурс цвета
      */
     private fun setDrawableColor(@ColorRes color: Int) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            compoundDrawableTintList = ContextCompat.getColorStateList(context, color)
-        }
+        compoundDrawableTintList = ContextCompat.getColorStateList(context, color)
     }
 
     /**
