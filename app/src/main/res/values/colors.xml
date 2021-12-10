@@ -33,4 +33,13 @@
 
     <color name="primaryTextColor">#5E91A8</color>
     <color name="secondaryTextColor">#002c40</color>
+
+    <color name="negative">#B00020</color>
+    <color name="positive">#00ad24</color>
+    <color name="positive_alt">#2bbd7e</color>
+    <color name="alert">#d32f2f</color>
+
+    <color name="error">@color/negative</color>
+    <color name="check_color_dark_green">@color/positive</color>
+    <color name="ok_color_green">@color/positive</color>
 </resources>

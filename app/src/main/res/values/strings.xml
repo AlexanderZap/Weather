@@ -4,4 +4,6 @@
     <string name="find_by_gps">По GPS</string>
     <string name="title_search">SearchWeather</string>
     <string name="text_copied_to_clipboard">Текст скопирован</string>
+
+    <string name="incorrect_value">Неверное значение поля</string>
 </resources>
