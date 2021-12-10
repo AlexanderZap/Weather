@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/ic_check_circle_white_24dp.xml" value="0.5444444444444444" />
+        <entry key="app/src/main/res/drawable/ic_error_outline.xml" value="0.5444444444444444" />
         <entry key="app/src/main/res/drawable/ic_round_sync_24.xml" value="0.5796875" />
         <entry key="app/src/main/res/drawable/ic_share_white_24dp.xml" value="0.5796875" />
         <entry key="app/src/main/res/layout/activity_base.xml" value="0.5494791666666666" />
