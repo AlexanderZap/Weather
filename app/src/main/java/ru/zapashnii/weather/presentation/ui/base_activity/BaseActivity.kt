@@ -37,10 +37,10 @@ class BaseActivity : AppCompatActivity() {
 
         viewRouter.setCurrentActivity(this)
 
-        replaceFragment(StartFragment.newInstance())
+        addFragment(StartFragment.newInstance())
 
         when (intent.getStringExtra(TYPE_ACTIVITY)) {
-            SEARCH_WEATHER -> replaceFragment(SearchWeatherFragment.newInstance(
+            SEARCH_WEATHER -> replaceFragmentWithAnimation(SearchWeatherFragment.newInstance(
                 cityName = intent.getStringExtra(CITY_NAME) ?: ""
             ))
         }
@@ -93,6 +93,38 @@ class BaseActivity : AppCompatActivity() {
             .add(R.id.mainContainer, fragment, tag + fragmentsStack)
             .addToBackStack(tag + fragmentsStack)
             .commit()
+    }
+
+    /**
+     * Создать фрагмент с анимцией
+     *
+     * @param fragment
+     */
+    fun addFragmentWithAnimation(fragment: Fragment) {
+        Utils.hideSoftKeyboard(this)
+        fragmentsStack++
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.enter, 0, 0, R.anim.pop_exit)
+            .add(R.id.mainContainer, fragment, tag + fragmentsStack)
+            .addToBackStack(tag + fragmentsStack)
+            .commitAllowingStateLoss()
+
+    }
+
+    /**
+     * Подменить фрагмент с анимацией
+     *
+     * @param fragment
+     */
+    fun replaceFragmentWithAnimation(fragment: Fragment) {
+        fragmentsStack++
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.enter, 0, 0, R.anim.pop_exit)
+            .replace(R.id.mainContainer, fragment, tag + fragmentsStack)
+            .addToBackStack(tag + fragmentsStack)
+            .commitAllowingStateLoss()
     }
 
     /**
