@@ -6,6 +6,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
+import android.view.View
 import android.widget.Toast
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -53,6 +54,16 @@ fun String.convertToDouble(): Double {
     } catch (ex: NumberFormatException) {
         0.0
     }
+}
+
+/**
+ * Предотвратить двойное нажатие
+ *
+ * @param timeout
+ * @param action
+ */
+fun View.setCountdownOnClickListener(timeout: Long = 300L, action: (view: View?) -> Unit) {
+    this.setOnClickListener(CountDownOnClickListener(timeout, action))
 }
 
 /**
