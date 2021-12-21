@@ -1,6 +1,7 @@
 package ru.zapashnii.weather.di
 
 import dagger.Component
+import ru.zapashnii.weather.network.CheckConnectInterceptor
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import ru.zapashnii.weather.presentation.ui.search_weather.SearchWeatherFragment
 import ru.zapashnii.weather.presentation.ui.start_fragment.StartFragment
@@ -13,4 +14,5 @@ interface ApplicationComponent {
     fun inject(baseActivity: BaseActivity)
     fun inject(startFragment: StartFragment)
     fun inject(searchWeatherFragment: SearchWeatherFragment)
+    fun inject(checkConnectInterceptor: CheckConnectInterceptor)
 }
