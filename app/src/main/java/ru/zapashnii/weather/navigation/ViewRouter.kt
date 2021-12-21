@@ -10,6 +10,7 @@ import androidx.core.app.ActivityCompat
 import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
+import ru.zapashnii.weather.presentation.dialog.SingleDialog
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -134,4 +135,15 @@ class ViewRouter @Inject constructor() {
         onItemSelected?.let { params.onItemSelected = it }
         currentActivity?.showBottomSheet(ItemListBottomSheetFragment.newInstance(params))
     }*/
+
+    private val singleDialog: SingleDialog by lazy { SingleDialog() }
+
+    /**
+     * Создать и показать диалоговое окно с сообщением и кнопкой Ок. Перед показом закрывает все предыдущие диалоговые окна
+     *
+     * @param message       текст сообщения
+     */
+    fun singleAlertDialog(message: String) {
+        currentActivity?.let { singleDialog.singleAlertDialog(message, it) }
+    }
 }

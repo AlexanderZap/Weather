@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import ru.zapashnii.weather.di.MainApp
@@ -111,5 +112,15 @@ object Utils {
         val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER)
+    }
+
+    /**
+     * Получить текст по [StringRes]
+     *
+     * @param name  [StringRes]
+     * @return      текст
+     */
+    fun getString(@StringRes name: Int): String {
+        return MainApp.instance.getString(name)
     }
 }
