@@ -6,6 +6,7 @@ import okhttp3.Response
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.navigation.ViewRouter
+import ru.zapashnii.weather.utils.Logger
 import ru.zapashnii.weather.utils.NetworkUtils
 import ru.zapashnii.weather.utils.Utils
 import javax.inject.Inject
@@ -37,6 +38,7 @@ class CheckConnectInterceptor : Interceptor {
         return try {
             chain.proceed(builder.build())
         } catch (ex: Exception) {
+            Logger.logError(ex)
             throw ex
         }
     }

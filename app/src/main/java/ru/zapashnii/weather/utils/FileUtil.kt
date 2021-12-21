@@ -1,6 +1,5 @@
 package ru.zapashnii.weather.utils
 
-import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
@@ -23,7 +22,10 @@ object FileUtil {
         return if (!parent.isNullOrBlank() && name.isNotBlank()) {
             createFileOrNull(parent, name)
         } else {
-            Log.e(this.javaClass.name, "Unable to create file $parent/$name")
+            Logger.logError(
+                tag = this.javaClass.name,
+                message = "Unable to create file $parent/$name"
+            )
             null
         }
     }
@@ -39,7 +41,7 @@ object FileUtil {
         return try {
             createFile(directoryPath, fileName)
         } catch (ex: IOException) {
-            Log.e(this.javaClass.name, "$ex")
+            Logger.logError(tag = this.javaClass.name, message = "$ex")
             null
         }
     }
@@ -65,6 +67,10 @@ object FileUtil {
 
             file
         } else {
+            Logger.logError(
+                tag = this.javaClass.name,
+                message = "Unable to create file $directoryPath/$fileName. Directory path or fileName is incorrect"
+            )
             throw IOException("Unable to create file $directoryPath/$fileName. Directory path or fileName is incorrect")
         }
     }
@@ -86,12 +92,14 @@ object FileUtil {
                     file
                 }
             } catch (ex: Exception) {
-                Log.e(this.javaClass.name, "$ex")
+                Logger.logError(tag = this.javaClass.name, message = "$ex")
                 null
             }
         } else {
-            Log.e(this.javaClass.name,
-                "Unable to write file $fileToWrite, isFileExist = ${fileToWrite?.exists()}, canWriteToFile = ${fileToWrite?.canWrite()}")
+            Logger.logError(
+                tag = this.javaClass.name,
+                message = "Unable to write file $fileToWrite, isFileExist = ${fileToWrite?.exists()}, canWriteToFile = ${fileToWrite?.canWrite()}"
+            )
             null
         }
     }
