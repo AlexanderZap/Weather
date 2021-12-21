@@ -9,6 +9,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import ru.zapashnii.weather.BuildConfig
 import ru.zapashnii.weather.network.CheckConnectInterceptor
+import ru.zapashnii.weather.network.MainInterceptor
 import ru.zapashnii.weather.network.WeatherApi
 import javax.inject.Singleton
 
@@ -25,16 +26,22 @@ class NetworkModule {
 
     @Provides
     @Singleton
+    fun provideMainInterceptor(): MainInterceptor = MainInterceptor()
+
+    @Provides
+    @Singleton
     fun provideCheckConnectInterceptor(): CheckConnectInterceptor = CheckConnectInterceptor()
 
     @Provides
     @Singleton
     fun provideOkhttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
+        mainInterceptor: MainInterceptor,
         checkConnectInterceptor: CheckConnectInterceptor
     ): OkHttpClient =
         OkHttpClient.Builder()
             .addInterceptor(checkConnectInterceptor)
+            .addInterceptor(mainInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .build()
 
