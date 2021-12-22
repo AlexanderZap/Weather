@@ -135,4 +135,10 @@ class BaseActivity : AppCompatActivity() {
     fun showBottomSheet(fragment: BottomSheetDialogFragment) {
         fragment.show(supportFragmentManager, null)
     }
+
+    override fun onBackPressed() {
+        fragmentsStack--
+        Utils.hideSoftKeyboard(this)
+        super.onBackPressed()
+    }
 }

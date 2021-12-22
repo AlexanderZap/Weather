@@ -146,4 +146,9 @@ class ViewRouter @Inject constructor() {
     fun singleAlertDialog(message: String) {
         currentActivity?.let { singleDialog.singleAlertDialog(message, it) }
     }
+
+    /** Назад на один экран */
+    fun back() {
+        currentActivity?.onBackPressed()
+    }
 }
