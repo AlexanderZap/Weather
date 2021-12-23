@@ -108,8 +108,7 @@ object Utils {
      * @return      True, если включен
      */
      fun isLocationEnabled(): Boolean {
-        val context = MainApp.instance.applicationContext
-        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        val locationManager =  MainApp.instance.applicationContext.getSystemService(Context.LOCATION_SERVICE) as LocationManager
         return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(
             LocationManager.NETWORK_PROVIDER)
     }
