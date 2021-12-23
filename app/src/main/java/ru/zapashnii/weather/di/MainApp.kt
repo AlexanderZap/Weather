@@ -8,10 +8,14 @@ class MainApp : Application() {
         lateinit var instance: MainApp
 
     }
-        lateinit var applicationComponent: ApplicationComponent
+
+    lateinit var applicationComponent: ApplicationComponent
+        private set
 
     override fun onCreate() {
         super.onCreate()
         applicationComponent = DaggerApplicationComponent.create()
+
+        instance = this
     }
 }
