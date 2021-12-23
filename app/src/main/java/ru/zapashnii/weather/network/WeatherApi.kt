@@ -11,12 +11,16 @@ interface WeatherApi {
      * Получить погоду по названию города
      *
      * @param name          название города
+     * @param units         в каких единицах приходит температура, если null она приходит в Кельвинах
+     * @param lang          на каком языке получить информации о погоде, если null на английском
      * @param api           уникальный ключ
      * @return              список с погодой
      */
     @GET("weather")
     suspend fun getWeatherByCityName(
         @Query("q") name: String,
+        @Query("units") units: String?,
+        @Query("lang") lang: String?,
         @Query("appid") api: String = BuildConfig.API_KEY,
     ): Weather
 

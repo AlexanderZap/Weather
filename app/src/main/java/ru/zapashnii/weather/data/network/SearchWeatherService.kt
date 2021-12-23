@@ -21,6 +21,6 @@ class SearchWeatherService @Inject constructor(
      * @return                  список с погодой [Weather]
      */
     override suspend fun getWeatherByCityName(cityName: String): Weather {
-        return api.getWeatherByCityName(cityName)
+        return api.getWeatherByCityName(cityName, null, null)
     }
 }

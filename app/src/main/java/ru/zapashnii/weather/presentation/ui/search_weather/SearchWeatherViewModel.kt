@@ -18,8 +18,8 @@ class SearchWeatherViewModel(
 ) : ViewModel() {
 
     /** Список Погоды */
-    private var _listWeather = MutableLiveData<List<Weather>>(emptyList())
-    var listWeather: LiveData<List<Weather>> = _listWeather
+    private var _listWeather = MutableLiveData<Weather>()
+    var listWeather: LiveData<Weather> = _listWeather
 
     /** Загрузить всю необходимую информацию */
     @MainThread
