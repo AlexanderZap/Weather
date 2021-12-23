@@ -60,7 +60,7 @@ class MainInterceptor : Interceptor {
      * @return          json в виде строки или пустую строку, если response.body == null.
      */
     private fun getJsonString(response: Response): String {
-        return response.body()?.string() ?: ""
+        return response.peekBody(2048).string() ?: ""
     }
 
     /**
