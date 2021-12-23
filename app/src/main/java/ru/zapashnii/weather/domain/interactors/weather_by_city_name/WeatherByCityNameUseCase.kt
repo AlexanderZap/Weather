@@ -12,13 +12,13 @@ import javax.inject.Inject
  */
 class WeatherByCityNameUseCase @Inject constructor(
     private val repository: ISearchWeatherRepository,
-) : UseCase<List<Weather>?, String>(), IWeatherByCityNameUseCase {
+) : UseCase<Weather?, String>(), IWeatherByCityNameUseCase {
 
-    override suspend fun run(params: String): List<Weather>? {
+    override suspend fun run(params: String): Weather? {
         return repository.getWeatherByCityName(params)
     }
 
-    override suspend fun getWeatherByCityName(cityName: String): List<Weather>? {
+    override suspend fun getWeatherByCityName(cityName: String): Weather? {
         return run(cityName)
     }
 

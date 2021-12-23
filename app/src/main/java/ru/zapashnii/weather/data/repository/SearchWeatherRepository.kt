@@ -14,9 +14,9 @@ class SearchWeatherRepository @Inject constructor(
     private val service: ISearchWeatherService,
 ) : ISearchWeatherRepository {
 
-    private var cache: HashMap<String, List<Weather>?> = hashMapOf()
+    private var cache: HashMap<String, Weather?> = hashMapOf()
 
-    override suspend fun getWeatherByCityName(cityName: String): List<Weather>? {
+    override suspend fun getWeatherByCityName(cityName: String): Weather? {
         return if (cache[cityName] == null) {
             service.getWeatherByCityName(cityName).apply {
                 cache[cityName] = this

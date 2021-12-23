@@ -12,5 +12,5 @@ interface ISearchWeatherRepository : ICleanableRepository {
      * @param cityName      название города
      * @return              список погоды [Weather]
      */
-    suspend fun getWeatherByCityName(cityName: String): List<Weather>?
+    suspend fun getWeatherByCityName(cityName: String): Weather?
 }

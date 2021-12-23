@@ -18,7 +18,7 @@ interface WeatherApi {
     suspend fun getWeatherByCityName(
         @Query("q") name: String,
         @Query("appid") api: String = BuildConfig.API_KEY,
-    ): List<Weather>
+    ): Weather
 
     /**
      * Получить погоду по id города
@@ -31,5 +31,5 @@ interface WeatherApi {
     suspend fun getWeatherByCityId(
         @Query("id") city_id: String,
         @Query("appid") api: String = BuildConfig.API_KEY,
-    ): List<Weather>
+    ): Weather
 }
