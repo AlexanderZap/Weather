@@ -53,6 +53,7 @@ class StartFragment : Fragment() {
 
     /** Получить местоположение */
     private fun getLastLocation() {
+        fusedLocationProviderClient =  FusedLocationProviderClient(activity)
         if (Utils.checkPermission()) {
             if (Utils.isLocationEnabled()) {
                 fusedLocationProviderClient.lastLocation.addOnCompleteListener { task ->
