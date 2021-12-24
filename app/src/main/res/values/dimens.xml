@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- BottomSheetDialogFragment -->
+    <dimen name="min_height_for_list_in_search_bottom_sheet">700dp</dimen>
+    <dimen name="min_height_for_list_bottom_sheet">0dp</dimen>
+</resources>

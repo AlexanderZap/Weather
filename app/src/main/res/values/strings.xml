@@ -10,4 +10,6 @@
     <string name="ok">Ок</string>
     <string name="error">Ошибка</string>
     <string name="cannot_connect_to_internet">Возможно, Вы не подключены к Интернету. Проверьте соединение и повторите попытку</string>
+
+    <string name="searching">Поиск</string>
 </resources>
