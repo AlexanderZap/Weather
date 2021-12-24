@@ -12,21 +12,20 @@ import ru.zapashnii.weather.domain.interactors.weather_by_city_name.IWeatherByCi
 import ru.zapashnii.weather.domain.model.GetWeatherRequest
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.navigation.ViewRouter
-import javax.inject.Inject
 
 class SearchWeatherViewModel(
-    //private val cityName: String,
+    private val cityName: String,
     private val viewRouter: ViewRouter,
     private val weatherByCityNameUseCase: IWeatherByCityNameUseCase,
 ) : ViewModel() {
 
-    /** Список Погоды */
+    /** Погоды */
     private var _listWeather = MutableLiveData<Weather>()
     var listWeather: LiveData<Weather> = _listWeather
 
     /** Загрузить всю необходимую информацию */
     @MainThread
-    fun loadData(cityName: String) {
+    fun loadData() {
         viewModelScope.launch {
             _listWeather.value = weatherByCityNameUseCase.getWeatherByCityName(
                 getWeatherRequest = GetWeatherRequest(
@@ -44,21 +43,7 @@ class SearchWeatherViewModel(
     }
 
     /** Фабрика [SearchWeatherViewModel] */
-    class Factory @Inject constructor(
-        private val viewRouter: ViewRouter,
-        private val weatherByCityNameUseCase: IWeatherByCityNameUseCase,
-    ) : ViewModelProvider.Factory {
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return SearchWeatherViewModel(
-                viewRouter = viewRouter,
-                weatherByCityNameUseCase = weatherByCityNameUseCase
-            ) as T
-        }
-    }
-    //при пересоздании экрана может возникнуть ситуация когда параметры передоваемые в loadData() равны null и возможны проблемы
-    //поэтому параметры передаем через IFactory с помощью Dagger2
-    /** Фабрика [SearchWeatherViewModel] */
-    /*class Factory @AssistedInject constructor(
+    class Factory @AssistedInject constructor(
         @Assisted("cityName") private val cityName: String,
         private val viewRouter: ViewRouter,
         private val weatherByCityNameUseCase: IWeatherByCityNameUseCase,
@@ -70,18 +55,18 @@ class SearchWeatherViewModel(
                 weatherByCityNameUseCase = weatherByCityNameUseCase
             ) as T
         }
-    }*/
+    }
 
-//    /** Фабрика создания [SearchWeatherViewModel.Factory] генерируется даггером */
-//    @AssistedFactory
-//    interface IFactory {
-//        /**
-//         * Созать фабрику [SearchWeatherViewModel.Factory]
-//         * @param cityName    Название города
-//         * @return            фабрика [SearchWeatherViewModel.Factory]
-//         */
-//        fun create(
-//            @Assisted("cityName") cityName: String,
-//        ): Factory
-//    }
+    /** Фабрика создания [SearchWeatherViewModel.Factory] генерируется даггером */
+    @AssistedFactory
+    interface IFactory {
+        /**
+         * Созать фабрику [SearchWeatherViewModel.Factory]
+         * @param cityName    Название города
+         * @return            фабрика [SearchWeatherViewModel.Factory]
+         */
+        fun create(
+            @Assisted("cityName") cityName: String,
+        ): Factory
+    }
 }
