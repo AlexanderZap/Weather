@@ -3,21 +3,21 @@ package ru.zapashnii.weather.domain.model
 import com.google.gson.annotations.SerializedName
 
 /**
- * TODO
+ * Информация о погоде
  *
- * @property base
+ * @property base           Внутренний параметр
  * @property clouds         Облачность
- * @property cod
+ * @property cod            Внутренний параметр
  * @property coord          Координаты города
  * @property dt             Время расчета данных, unix, UTC
  * @property id             ID города
- * @property main
+ * @property main           Информация о температуре
  * @property name           Название города
- * @property sys
+ * @property sys            Информация о стране
  * @property timezone       Сдвиг в секундах от UTC
- * @property visibility
- * @property weather
- * @property wind
+ * @property visibility     Видимость, метр
+ * @property weather        Информация о погоде
+ * @property wind           Информация о ветре
  */
 data class Weather(
     @SerializedName("base")
@@ -72,7 +72,7 @@ data class Coord(
 )
 
 /**
- * TODO
+ * Информация о температуре
  *
  * @property feels_like     Температура. Этот температурный параметр объясняет человеческое восприятие погоды.
  * @property humidity       Влажность, %
@@ -97,14 +97,14 @@ data class Main(
 )
 
 /**
- * TODO
+ * Информация о стране
  *
  * @property country    Код страны
- * @property id
- * @property message
- * @property sunrise
- * @property sunset
- * @property type
+ * @property id         Внутренний параметр
+ * @property message    Внутренний параметр
+ * @property sunrise    Время восхода, unix, UTC
+ * @property sunset     Время заката, unix, UTC
+ * @property type       Внутренний параметр
  */
 data class Sys(
     @SerializedName("country")
@@ -122,12 +122,12 @@ data class Sys(
 )
 
 /**
- * TODO
+ * Информация о погоде
  *
- * @property description
- * @property icon
- * @property id
- * @property main
+ * @property description    Идентификатор значка погоды
+ * @property icon           Погодные условия в группе.
+ * @property id             Идентификатор погодных условий
+ * @property main           Группа погодных параметров (Дождь, Снег, Экстрим и др.)
  */
 data class WeatherX(
     @SerializedName("description")
@@ -141,7 +141,7 @@ data class WeatherX(
 )
 
 /**
- * TODO
+ * Информация о ветре
  *
  * @property deg    Направление ветра, градусы (метеорологические)
  * @property speed  Скорость ветра
