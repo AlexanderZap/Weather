@@ -17,8 +17,11 @@ import com.google.android.material.textfield.TextInputLayout
 import ru.zapashnii.weather.utils.inputmask.MaskedTextChangedListener
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.di.MainApp
+import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.Weather
+import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.presentation.adapters.WeatherAdapter
+import ru.zapashnii.weather.presentation.glideImageView.GlideImageView
 import ru.zapashnii.weather.utils.toBitmapFromBase64
 
 /**
@@ -199,4 +202,23 @@ fun showFab(view: FloatingActionButton, isVisible: Boolean) {
 fun mask(view: EditText, format: String) {
     val mask = MaskedTextChangedListener(format, view, null)
     view.addTextChangedListener(mask)
+}
+
+/**
+ * Адаптер для биндинга в RecyclerView списка [IListItemField]
+ * @param view      RecyclerView
+ * @param items     список элементов [IListItemField] для отображения
+ */
+@BindingAdapter("bind:items")
+fun setItems(view: RecyclerView, items: List<IListItemField>) {
+    (view.adapter as ItemListAdapter).setData(items)
+}
+
+/**
+ * Загрузить изображение в [GlideImageView] по сслыке
+ * @param url ссылка на изображение
+ */
+@BindingAdapter("bind:imageUrl")
+fun setImage(view: GlideImageView, url: String?) {
+    url?.let { view.loadImage(it) }
 }
