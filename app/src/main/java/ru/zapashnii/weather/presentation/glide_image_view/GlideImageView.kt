@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.glideImageView
+package ru.zapashnii.weather.presentation.glide_image_view
 
 import android.content.Context
 import android.graphics.Bitmap

@@ -19,7 +19,7 @@ class SearchWeatherViewModel(
     private val weatherByCityNameUseCase: IWeatherByCityNameUseCase,
 ) : ViewModel() {
 
-    /** Погоды */
+    /** Погода */
     private var _listWeather = MutableLiveData<Weather>()
     var listWeather: LiveData<Weather> = _listWeather
 

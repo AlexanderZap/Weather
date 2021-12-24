@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.itemList
+package ru.zapashnii.weather.presentation.item_list
 
 import androidx.annotation.MainThread
 import androidx.lifecycle.LiveData

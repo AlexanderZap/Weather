@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.itemList
+package ru.zapashnii.weather.presentation.item_list
 
 import android.app.Dialog
 import android.os.Bundle
@@ -18,8 +18,6 @@ import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.utils.Utils
-import ru.zapashnii.weather.utils.setTextOrHide
-import ru.zapashnii.weather.utils.setTintColorRes
 
 /**  Фрагмент BottomSheetDialog. Для создания необходим набор параметров [ItemListParams] */
 class ItemListBottomSheetFragment : BottomSheetDialogFragment() {

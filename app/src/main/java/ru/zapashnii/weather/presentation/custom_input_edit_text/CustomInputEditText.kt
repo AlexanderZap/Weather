@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.ui
+package ru.zapashnii.weather.presentation.custom_input_edit_text
 
 import android.content.Context
 import android.text.Editable

@@ -56,7 +56,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:visibility="visible">
 
-            <ru.zapashnii.weather.presentation.glideImageView.GlideImageView
+            <ru.zapashnii.weather.presentation.glide_image_view.GlideImageView
                 android:id="@+id/item_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"

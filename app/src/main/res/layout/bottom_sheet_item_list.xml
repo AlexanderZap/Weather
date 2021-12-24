@@ -11,7 +11,7 @@
 
         <variable
             name="viewModel"
-            type="ru.zapashnii.weather.presentation.itemList.ItemListViewModel" />
+            type="ru.zapashnii.weather.presentation.item_list.ItemListViewModel" />
     </data>
 
     <LinearLayout
@@ -28,7 +28,7 @@
             android:focusable="true"
             android:focusableInTouchMode="true">
 
-            <ru.zapashnii.weather.presentation.glideImageView.GlideImageView
+            <ru.zapashnii.weather.presentation.glide_image_view.GlideImageView
                 android:id="@+id/image"
                 android:layout_width="match_parent"
                 android:layout_height="80dp"

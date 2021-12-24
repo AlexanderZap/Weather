@@ -11,7 +11,7 @@ import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.dialog.SingleDialog
-import ru.zapashnii.weather.presentation.itemList.ItemListBottomSheetFragment
+import ru.zapashnii.weather.presentation.item_list.ItemListBottomSheetFragment
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import ru.zapashnii.weather.utils.Utils
 import javax.inject.Inject

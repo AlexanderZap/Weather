@@ -21,7 +21,7 @@ import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.presentation.adapters.WeatherAdapter
-import ru.zapashnii.weather.presentation.glideImageView.GlideImageView
+import ru.zapashnii.weather.presentation.glide_image_view.GlideImageView
 import ru.zapashnii.weather.utils.toBitmapFromBase64
 
 /**
