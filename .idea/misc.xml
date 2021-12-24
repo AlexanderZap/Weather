@@ -8,9 +8,10 @@
         <entry key="app/src/main/res/drawable/ic_broken_image_black_24dp.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_photo_black_24dp.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/layout/bottom_sheet_item_list.xml" value="0.5635416666666667" />
-        <entry key="app/src/main/res/layout/cv_item.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/cv_item.xml" value="0.55" />
+        <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/item_list_field.xml" value="0.5635416666666667" />
-        <entry key="app/src/main/res/layout/search_weather_fragment.xml" value="0.2740628166160081" />
+        <entry key="app/src/main/res/layout/search_weather_fragment.xml" value="0.5" />
       </map>
     </option>
   </component>
