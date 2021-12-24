@@ -14,6 +14,12 @@ interface IListItemField {
     /** Url изображения */
     val iconUrl: String?
 
-    /** Цвет */
-    val color: Int?
+    /** Цвет иконки */
+    val colorIcon: Int?
+
+    /** Цвет заголовка */
+    val colorTitle: Int?
+
+    /** Цвет подзаголовка */
+    val colorSubtitle: Int?
 }

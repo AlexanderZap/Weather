@@ -11,9 +11,13 @@ import ru.zapashnii.weather.di.MainApp
 import ru.zapashnii.weather.domain.model.IListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.dialog.SingleDialog
+import ru.zapashnii.weather.presentation.itemList.ItemListBottomSheetFragment
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
+import ru.zapashnii.weather.utils.Utils
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 /** Код запроса */
 const val PERMISSION_ID = 1
@@ -77,8 +81,9 @@ class ViewRouter @Inject constructor() {
         if (currentActivity == null) return
         val uri = Uri.parse(url)
         val intent = getLinkIntent(uri)
-        if (isNotNeedCheckLink(uri) || intent.resolveActivity(currentActivity?.packageManager
-                ?: return) != null
+        if (isNotNeedCheckLink(uri) || intent.resolveActivity(
+                currentActivity?.packageManager ?: return
+            ) != null
         ) {
             currentActivity?.startActivity(intent)
         } else {
@@ -95,6 +100,7 @@ class ViewRouter @Inject constructor() {
     fun showError(errorMessage: String) {
         Toast.makeText(MainApp.instance.applicationContext, errorMessage, LENGTH_SHORT).show()
     }
+
     /**
      * Показать BottomSheetDialogFragment со списком элементов
      * @param title                 id заголовка
@@ -103,9 +109,21 @@ class ViewRouter @Inject constructor() {
      * @param onCanceled            действие при отмене
      * @param onItemSelected        действие при нажатии на элемент списка
      */
-/*    fun showItemList(title: Int, items: List<IListItemField>, isNeedSowSearchField: Boolean = false, onCanceled: (() -> Unit)? = null, onItemSelected: ((item: IListItemField) -> Unit)? = null) {
-        showItemList(MainApp.getString(title), items, isNeedSowSearchField, onCanceled, onItemSelected)
-    }*/
+    fun showItemList(
+        title: Int,
+        items: List<IListItemField>,
+        isNeedSowSearchField: Boolean = false,
+        onCanceled: (() -> Unit)? = null,
+        onItemSelected: ((item: IListItemField) -> Unit)? = null
+    ) {
+        showItemList(
+            Utils.getString(title),
+            items,
+            isNeedSowSearchField,
+            onCanceled,
+            onItemSelected
+        )
+    }
 
     /**
      * Показать BottomSheetDialogFragment со списком элементов
@@ -115,7 +133,13 @@ class ViewRouter @Inject constructor() {
      * @param onCanceled            действие при отмене
      * @param onItemSelected        действие при нажатии на элемент списка
      */
-/*    fun showItemList(title: String, items: List<IListItemField>, isNeedSowSearchField: Boolean = false, onCanceled: (() -> Unit)? = null, onItemSelected: ((item: IListItemField) -> Unit)? = null) {
+    fun showItemList(
+        title: String,
+        items: List<IListItemField>,
+        isNeedSowSearchField: Boolean = false,
+        onCanceled: (() -> Unit)? = null,
+        onItemSelected: ((item: IListItemField) -> Unit)? = null
+    ) {
         val params = ItemListParams(
             title = title,
             items = items,
@@ -124,17 +148,34 @@ class ViewRouter @Inject constructor() {
             onItemSelected = onItemSelected
         )
         showItemList(params)
-    }*/
+    }
 
     /**
      * Показать BottomSheetDialogFragment со списком элементов
      * @param params            набор параметров для отображения всплывающего меню
      * @param onItemSelected    действие нажатия на элемент списка
      */
-/*    fun showItemList(params: ItemListParams, onItemSelected: ((item: IListItemField) -> Unit)? = null) {
+    fun showItemList(
+        params: ItemListParams,
+        onItemSelected: ((item: IListItemField) -> Unit)? = null
+    ) {
         onItemSelected?.let { params.onItemSelected = it }
         currentActivity?.showBottomSheet(ItemListBottomSheetFragment.newInstance(params))
-    }*/
+    }
+
+    suspend fun selectItemList(params: ItemListParams): IListItemField? {
+        return suspendCoroutine { continuation ->
+            params.onItemSelected = { continuation.resume(it) }
+            params.onCanceled = { continuation.resume(null) }
+
+            if (params.items.size < 15) {
+                currentActivity?.showBottomSheet(ItemListBottomSheetFragment.newInstance(params))
+            } else {
+                //currentActivity?.addFragmentWithAnimation(ItemListFragment.newInstance(params))
+            }
+        }
+
+    }
 
     private val singleDialog: SingleDialog by lazy { SingleDialog() }
 

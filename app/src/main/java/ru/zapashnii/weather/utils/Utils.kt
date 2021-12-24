@@ -10,6 +10,7 @@ import android.location.LocationManager
 import android.net.Uri
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.ColorRes
 import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
@@ -121,5 +122,15 @@ object Utils {
      */
     fun getString(@StringRes name: Int): String {
         return MainApp.instance.getString(name)
+    }
+
+    /**
+     * Получить цвет по [ColorRes]
+     *
+     * @param id    [ColorRes]
+     * @return      цвет
+     */
+    fun getColor(@ColorRes id: Int): Int {
+        return MainApp.instance.getColor(id)
     }
 }

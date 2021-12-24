@@ -3,11 +3,17 @@ package ru.zapashnii.weather.utils
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.view.View
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.ColorInt
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import ru.zapashnii.weather.R
@@ -94,4 +100,35 @@ fun String.copyInClipboard(label: String) {
     clipboardManager.setPrimaryClip(clipData)
 
     Toast.makeText(context, context.getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
+}
+
+/**
+ * Установить текст и показать TextView, если текс не пустой и не null.
+ * @param text  текст, устанавливаемый в TextView.
+ */
+fun TextView.setTextOrHide(text: String?) {
+    if (!text.isNullOrBlank()) {
+        this.visibility = View.VISIBLE
+        this.text = text
+    } else {
+        this.visibility = View.GONE
+    }
+}
+
+/**
+ * Применить оттенок к изображению
+ *
+ * @param color [ColorRes]
+ */
+fun ImageView.setTintColorRes(@ColorRes color: Int) {
+    this.setTintColor(ContextCompat.getColor(this.context, color))
+}
+
+/**
+ * Применить оттенок к изображению
+ *
+ * @param color [ColorInt]
+ */
+fun ImageView.setTintColor(@ColorInt color: Int) {
+    this.imageTintList = ColorStateList.valueOf(color)
 }
