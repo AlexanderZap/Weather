@@ -4,6 +4,7 @@ import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.net.Uri
+import android.os.Handler
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
@@ -25,6 +26,12 @@ const val PERMISSION_ID = 1
 /** Клас навигации по приложению */
 @Singleton
 class ViewRouter @Inject constructor() {
+
+    companion object {
+        const val SHOW = 1
+        const val HIDE = 2
+        const val ERROR = 3
+    }
 
     private var currentActivity: BaseActivity? = null
 
@@ -192,4 +199,32 @@ class ViewRouter @Inject constructor() {
     fun back() {
         currentActivity?.onBackPressed()
     }
+
+    /** Показать индикатор загрузки */
+    fun showProgressAsync() {
+        handler.sendEmptyMessage(SHOW)
+    }
+
+    /** Скрыть индикатор загрузки */
+    fun hideProgressAsync() {
+        handler.sendEmptyMessage(HIDE)
+    }
+
+    var handler = Handler(Handler.Callback { message ->
+        when (message.what) {
+            SHOW -> {
+                progressStack++
+                currentActivity?.showProgress()
+            }
+            HIDE -> {
+                if (progressStack > 0) progressStack--
+                if (progressStack == 0) currentActivity?.hideProgress()
+            }
+
+            ERROR -> {
+                if (message.obj != null) showError(message.obj as String)
+            }
+        }
+        return@Callback false
+    })
 }

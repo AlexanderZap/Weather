@@ -3,6 +3,8 @@ package ru.zapashnii.weather.presentation.ui.base_activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import com.afollestad.materialdialogs.MaterialDialog
+import com.afollestad.materialdialogs.customview.customView
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.navigation.ViewRouter
@@ -23,6 +25,8 @@ class BaseActivity : AppCompatActivity() {
         const val START_FRAGMENT = "START_FRAGMENT"
     }
 
+    private var progress: MaterialDialog? = null
+
     @Inject
     lateinit var viewRouter: ViewRouter
 
@@ -39,10 +43,15 @@ class BaseActivity : AppCompatActivity() {
 
         addFragment(StartFragment.newInstance())
 
+        progress = MaterialDialog(this).customView(R.layout.dialog_progress, scrollable = false)
+            .cancelable(false)
+
         when (intent.getStringExtra(TYPE_ACTIVITY)) {
-            SEARCH_WEATHER -> replaceFragmentWithAnimation(SearchWeatherFragment.newInstance(
-                cityName = intent.getStringExtra(CITY_NAME) ?: ""
-            ))
+            SEARCH_WEATHER -> replaceFragmentWithAnimation(
+                SearchWeatherFragment.newInstance(
+                    cityName = intent.getStringExtra(CITY_NAME) ?: ""
+                )
+            )
         }
     }
 
@@ -50,6 +59,7 @@ class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         viewRouter.setCurrentActivity(this)
+        progress?.hide()
     }
 
     /** Передаем навигатору viewRouter текущую активность */
@@ -62,6 +72,14 @@ class BaseActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         viewRouter.removeCurrentActivity(this)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (progress != null) {
+            progress?.dismiss()
+            progress = null
+        }
     }
 
     /**
@@ -140,5 +158,15 @@ class BaseActivity : AppCompatActivity() {
         fragmentsStack--
         Utils.hideSoftKeyboard(this)
         super.onBackPressed()
+    }
+
+    /** Показать индикатор загрузки */
+    fun showProgress() {
+        progress?.show()
+    }
+
+    /** Скрыть индикатор загрузки */
+    fun hideProgress() {
+        progress?.cancel()
     }
 }
