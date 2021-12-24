@@ -23,10 +23,23 @@ class SearchWeatherViewModel(
     private var _listWeather = MutableLiveData<Weather>()
     var listWeather: LiveData<Weather> = _listWeather
 
+    /** Url изображения погодных условий */
+    private var _imageUrl = MutableLiveData<String>()
+    var imageUrl: LiveData<String> = _imageUrl
+
+    /** Url изображения погодных условий */
+    private var _tvCity = MutableLiveData("")
+    var tvCity: LiveData<String> = _tvCity
+
+    /** Url изображения погодных условий */
+    private var _tvCountry = MutableLiveData("")
+    var tvCountry: LiveData<String> = _tvCountry
+
     /** Загрузить всю необходимую информацию */
     @MainThread
     fun loadData() {
         viewModelScope.launch {
+            viewRouter.showProgressAsync()
             _listWeather.value = weatherByCityNameUseCase.getWeatherByCityName(
                 getWeatherRequest = GetWeatherRequest(
                     name = cityName,
@@ -34,6 +47,18 @@ class SearchWeatherViewModel(
                     lang = RU
                 )
             )
+
+            _imageUrl.value =
+                "https://openweathermap.org/img/wn/${_listWeather.value?.weather?.get(0)?.icon}@2x.png"
+
+            _tvCity.value = _listWeather.value?.name
+            _tvCountry.value = when (_listWeather.value?.sys?.country) {
+                "ru", "RU" -> "Россия"
+                "us", "US" -> "Великобритания"
+                else -> ""
+            }
+
+            viewRouter.hideProgressAsync()
         }
     }
 

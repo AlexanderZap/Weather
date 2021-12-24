@@ -25,7 +25,7 @@ class StartViewModel(
 
     /** Нажатие на кнопку поиск погоды по названию города */
     fun clickFindByCity() {
-        openWeatherByCity("Krasnodar")
+        openWeatherByCity("Краснодар")
     }
 
     /**

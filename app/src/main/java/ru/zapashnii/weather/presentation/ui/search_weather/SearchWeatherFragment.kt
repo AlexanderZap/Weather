@@ -26,6 +26,8 @@ class SearchWeatherFragment : Fragment() {
 
     private lateinit var cityName: String
 
+    private var binding: SearchWeatherFragmentBinding? = null
+
     @Inject
     lateinit var factory: SearchWeatherViewModel.IFactory
 
@@ -40,7 +42,14 @@ class SearchWeatherFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.search_weather_fragment, container, false)
+        val view = inflater.inflate(R.layout.search_weather_fragment, container, false)
+
+        binding = DataBindingUtil.bind(view)
+
+        binding?.viewModel = viewModel
+        binding?.lifecycleOwner = viewLifecycleOwner
+
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
