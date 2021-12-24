@@ -6,7 +6,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import ru.zapashnii.weather.const.METRIC
+import ru.zapashnii.weather.const.RU
 import ru.zapashnii.weather.domain.interactors.weather_by_city_name.IWeatherByCityNameUseCase
+import ru.zapashnii.weather.domain.model.GetWeatherRequest
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.navigation.ViewRouter
 import javax.inject.Inject
@@ -25,7 +28,13 @@ class SearchWeatherViewModel(
     @MainThread
     fun loadData(cityName: String) {
         viewModelScope.launch {
-            _listWeather.value = weatherByCityNameUseCase.getWeatherByCityName(cityName)
+            _listWeather.value = weatherByCityNameUseCase.getWeatherByCityName(
+                getWeatherRequest = GetWeatherRequest(
+                    name = cityName,
+                    units = METRIC,
+                    lang = RU
+                )
+            )
         }
     }
 

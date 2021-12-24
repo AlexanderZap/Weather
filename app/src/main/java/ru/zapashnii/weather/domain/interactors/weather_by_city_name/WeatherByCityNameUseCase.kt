@@ -1,6 +1,7 @@
 package ru.zapashnii.weather.domain.interactors.weather_by_city_name
 
 import ru.zapashnii.weather.domain.interactors.base.UseCase
+import ru.zapashnii.weather.domain.model.GetWeatherRequest
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.domain.repository.ISearchWeatherRepository
 import javax.inject.Inject
@@ -12,14 +13,14 @@ import javax.inject.Inject
  */
 class WeatherByCityNameUseCase @Inject constructor(
     private val repository: ISearchWeatherRepository,
-) : UseCase<Weather?, String>(), IWeatherByCityNameUseCase {
+) : UseCase<Weather?, GetWeatherRequest>(), IWeatherByCityNameUseCase {
 
-    override suspend fun run(params: String): Weather? {
+    override suspend fun run(params: GetWeatherRequest): Weather? {
         return repository.getWeatherByCityName(params)
     }
 
-    override suspend fun getWeatherByCityName(cityName: String): Weather? {
-        return run(cityName)
+    override suspend fun getWeatherByCityName(getWeatherRequest: GetWeatherRequest): Weather? {
+        return run(getWeatherRequest)
     }
 
     override fun dispatch() {

@@ -1,5 +1,6 @@
 package ru.zapashnii.weather.data.network
 
+import ru.zapashnii.weather.domain.model.GetWeatherRequest
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.domain.network.ISearchWeatherService
 import ru.zapashnii.weather.network.WeatherApi
@@ -17,10 +18,14 @@ class SearchWeatherService @Inject constructor(
     /**
      * Получить данные о погоде
      *
-     * @param cityName          название города
-     * @return                  список с погодой [Weather]
+     * @param getWeatherRequest     параметры: название города, едницы измерения температуры, язык
+     * @return                      список погоды [Weather]
      */
-    override suspend fun getWeatherByCityName(cityName: String): Weather {
-        return api.getWeatherByCityName(cityName, null, null)
+    override suspend fun getWeatherByCityName(getWeatherRequest: GetWeatherRequest): Weather {
+        return api.getWeatherByCityName(
+            name = getWeatherRequest.name,
+            units = getWeatherRequest.units,
+            lang = getWeatherRequest.lang
+        )
     }
 }

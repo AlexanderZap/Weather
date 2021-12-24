@@ -1,5 +1,6 @@
 package ru.zapashnii.weather.data.repository
 
+import ru.zapashnii.weather.domain.model.GetWeatherRequest
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.domain.network.ISearchWeatherService
 import ru.zapashnii.weather.domain.repository.ISearchWeatherRepository
@@ -14,15 +15,15 @@ class SearchWeatherRepository @Inject constructor(
     private val service: ISearchWeatherService,
 ) : ISearchWeatherRepository {
 
-    private var cache: HashMap<String, Weather?> = hashMapOf()
+    private var cache: HashMap<GetWeatherRequest, Weather?> = hashMapOf()
 
-    override suspend fun getWeatherByCityName(cityName: String): Weather? {
-        return if (cache[cityName] == null) {
-            service.getWeatherByCityName(cityName).apply {
-                cache[cityName] = this
+    override suspend fun getWeatherByCityName(getWeatherRequest: GetWeatherRequest): Weather? {
+        return if (cache[getWeatherRequest] == null) {
+            service.getWeatherByCityName(getWeatherRequest).apply {
+                cache[getWeatherRequest] = this
             }
         } else {
-            cache[cityName]
+            cache[getWeatherRequest]
         }
     }
 
