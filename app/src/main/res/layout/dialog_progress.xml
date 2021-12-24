@@ -2,12 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/background_default"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingLeft="16dp"
-    android:paddingTop="16dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="16dp">
+    android:padding="16dp">
 
     <ProgressBar
         android:layout_width="wrap_content"
@@ -16,10 +14,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:gravity="center"
         android:text="@string/downloading"
-        android:textColor="@color/common_google_signin_btn_text_dark_focused"
+        android:textColor="@color/black"
         android:textSize="16sp" />
 
 </LinearLayout>

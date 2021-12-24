@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/background_button_default.xml" value="0.5707692307692308" />
+        <entry key="app/src/main/res/drawable/background_default.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_broken_image_black_24dp.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_photo_black_24dp.xml" value="0.5707692307692308" />
@@ -12,6 +13,7 @@
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/item_list_field.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/search_weather_fragment.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/start_fragment.xml" value="0.45" />
       </map>
     </option>
   </component>
