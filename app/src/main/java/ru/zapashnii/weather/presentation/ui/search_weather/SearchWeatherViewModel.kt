@@ -5,8 +5,8 @@ import androidx.lifecycle.*
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.zapashnii.weather.R
 import ru.zapashnii.weather.const.METRIC
 import ru.zapashnii.weather.const.RU
 import ru.zapashnii.weather.domain.interactors.weather_by_city_name.IWeatherByCityNameUseCase
@@ -50,6 +50,10 @@ class SearchWeatherViewModel(
     private var _tvFeelsLike = MutableLiveData("")
     var tvFeelsLike: LiveData<String> = _tvFeelsLike
 
+    /** Флаг видимости Shimmer эффекта при загрузке экрана */
+    private val _isVisibleLayoutShimmer = MutableLiveData(false)
+    val isVisibleLayoutShimmer: LiveData<Boolean> = _isVisibleLayoutShimmer
+
     /** Загрузить всю необходимую информацию */
     @MainThread
     fun loadData() {
@@ -71,6 +75,7 @@ class SearchWeatherViewModel(
      */
     private suspend fun getWeatherByCityName(getWeatherRequest: GetWeatherRequest) {
         viewRouter.showProgressAsync()
+        _isVisibleLayoutShimmer.value = true
 
         _weather.value = weatherByCityNameUseCase.getWeatherByCityName(
             getWeatherRequest = getWeatherRequest
@@ -92,6 +97,9 @@ class SearchWeatherViewModel(
 
         _tvDescription.value = _weather.value?.weather?.get(0)?.description
 
+        delay(500)
+
+        _isVisibleLayoutShimmer.value = false
         viewRouter.hideProgressAsync()
     }
 

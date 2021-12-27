@@ -7,10 +7,12 @@
         <entry key="app/src/main/res/drawable/background_button_default.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/background_default.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/bottom_sheet_background.xml" value="0.5707692307692308" />
+        <entry key="app/src/main/res/drawable/card_view_weather_for_shimmer.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_baseline_info_24.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_broken_image_black_24dp.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/drawable/ic_photo_black_24dp.xml" value="0.5707692307692308" />
         <entry key="app/src/main/res/layout/bottom_sheet_item_list.xml" value="0.5635416666666667" />
+        <entry key="app/src/main/res/layout/card_view_weather_for_shimmer.xml" value="0.5635416666666667" />
         <entry key="app/src/main/res/layout/cv_item.xml" value="0.55" />
         <entry key="app/src/main/res/layout/dialog_progress.xml" value="0.41776315789473684" />
         <entry key="app/src/main/res/layout/item_list_field.xml" value="0.5635416666666667" />

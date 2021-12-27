@@ -91,4 +91,6 @@ dependencies {
     //Material dialogs (https://github.com/afollestad/material-dialogs)
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
     implementation 'com.afollestad.material-dialogs:input:3.3.0'
+    // OTHER
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
 }

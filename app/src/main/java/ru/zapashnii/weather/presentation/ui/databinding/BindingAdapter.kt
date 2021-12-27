@@ -222,3 +222,29 @@ fun setItems(view: RecyclerView, items: List<ListItemField>) {
 fun setImage(view: GlideImageView, url: String?) {
     url?.let { view.loadImage(it) }
 }
+
+/**
+ * Установить видимость всей View.
+ * @param isVisible     TRUE - видимо, FALSE - невидимо
+ */
+@BindingAdapter("bind:visibility")
+fun setVisibility(view: View, isVisible: Boolean) {
+    view.visibility = if (isVisible) View.VISIBLE else View.GONE
+}
+
+/**
+ * Установить видимость всей View.
+ * @param isVisible     TRUE - видимо, FALSE - невидимо
+ */
+@BindingAdapter("bind:alphaVisibility")
+fun setAlphaVisibility(view: View, isVisible: Boolean) {
+
+    val alpha = if (isVisible) 1f else 0f
+    alphaAnimation(view, alpha)
+}
+
+fun alphaAnimation(view: View, targetAlpha: Float, duration: Long = 300L) {
+    view.apply {
+        animate().alpha(targetAlpha).setDuration(duration).start()
+    }
+}

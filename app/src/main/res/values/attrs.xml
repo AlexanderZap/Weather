@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ShimmerConstraintLayout">
+        <attr name="shimmer_tools_ignore_all" format="boolean"/>
+        <attr name="s_clip_to_children" format="boolean"/>
+        <attr name="s_colored" format="boolean"/>
+        <attr name="s_base_color" format="color"/>
+        <attr name="s_highlight_color" format="color"/>
+        <attr name="s_base_alpha" format="float"/>
+        <attr name="s_highlight_alpha" format="float"/>
+        <attr name="s_auto_start" format="boolean"/>
+        <attr name="s_duration" format="integer"/>
+        <attr name="s_repeat_count" format="integer"/>
+        <attr name="s_repeat_delay" format="integer"/>
+        <attr name="s_repeat_mode" format="enum">
+            <enum name="restart" value="1"/>
+            <enum name="reverse" value="2"/>
+        </attr>
+        <attr name="s_start_delay" format="integer"/>
+        <attr name="s_direction" format="enum">
+            <enum name="left_to_right" value="0"/>
+            <enum name="top_to_bottom" value="1"/>
+            <enum name="right_to_left" value="2"/>
+            <enum name="bottom_to_top" value="3"/>
+        </attr>
+        <attr name="s_dropoff" format="float"/>
+        <attr name="s_fixed_width" format="dimension"/>
+        <attr name="s_fixed_height" format="dimension"/>
+        <attr name="s_intensity" format="float"/>
+        <attr name="s_width_ratio" format="float"/>
+        <attr name="s_height_ratio" format="float"/>
+        <attr name="s_shape" format="enum">
+            <enum name="linear" value="0"/>
+            <enum name="radial" value="1"/>
+        </attr>
+        <attr name="s_tilt" format="float"/>
+    </declare-styleable>
+
+    <declare-styleable name="ShimmerConstraintLayout_Layout">
+        <attr name="layout_shimmer_ignore" format="boolean" />
+    </declare-styleable>
+</resources>

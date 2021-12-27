@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModelProvider
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.SearchWeatherFragmentBinding
 import ru.zapashnii.weather.utils.appComponent

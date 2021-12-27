@@ -39,21 +39,61 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/searchView"
-            android:layout_width="0dp"
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer1"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="16dp"
+            app:layout_constraintEnd_toEndOf="@+id/iconInfo"
+            app:layout_constraintStart_toStartOf="@+id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            bind:alphaVisibility="@{viewModel.isVisibleLayoutShimmer()}"
+            bind:visibility="@{viewModel.isVisibleLayoutShimmer()}"
+            tools:visibility="gone">
+
+            <TextView
+                android:id="@+id/viewShimmer1"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:background="@color/color_shimmer"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+        <TextView
+            android:id="@+id/searchView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:onClick="@{() -> viewModel.onChoiceCityClicked()}"
+            android:textAlignment="center"
+            android:textColor="@color/black"
             app:drawableStartCompat="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="@id/iconInfo"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
-            android:textAlignment="center"
-            app:text="@{viewModel.tvCity}" />
+            app:text="@{viewModel.tvCity}"
+            bind:visibility="@{!viewModel.isVisibleLayoutShimmer()}" />
+
+        <ru.zapashnii.weather.presentation.shimmer.ShimmerConstraintLayout
+            android:id="@+id/shimmerConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shimmer1"
+            bind:isShimmer="@{viewModel.isVisibleLayoutShimmer()}"
+            bind:visibility="@{viewModel.isVisibleLayoutShimmer()}"
+            tools:visibility="gone">
+
+            <include layout="@layout/card_view_weather_for_shimmer" />
+
+        </ru.zapashnii.weather.presentation.shimmer.ShimmerConstraintLayout>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/cardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
@@ -62,7 +102,8 @@
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/searchView">
+            app:layout_constraintTop_toBottomOf="@+id/searchView"
+            bind:visibility="@{!viewModel.isVisibleLayoutShimmer()}">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"

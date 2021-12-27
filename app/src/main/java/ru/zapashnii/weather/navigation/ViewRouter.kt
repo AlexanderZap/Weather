@@ -5,6 +5,7 @@ import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
 import android.net.Uri
 import android.os.Handler
+import android.os.Looper
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
@@ -15,6 +16,7 @@ import ru.zapashnii.weather.presentation.dialog.SingleDialog
 import ru.zapashnii.weather.presentation.item_list.ItemListBottomSheetFragment
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import ru.zapashnii.weather.utils.Utils
+import java.util.concurrent.Executor
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
@@ -210,7 +212,7 @@ class ViewRouter @Inject constructor() {
         handler.sendEmptyMessage(HIDE)
     }
 
-    var handler = Handler(Handler.Callback { message ->
+    private var handler = Handler(Handler.Callback { message ->
         when (message.what) {
             SHOW -> {
                 progressStack++
