@@ -1,5 +1,7 @@
 package ru.zapashnii.weather.presentation.ui.base_activity
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -45,6 +47,7 @@ class BaseActivity : AppCompatActivity() {
 
         progress = MaterialDialog(this).customView(R.layout.dialog_progress, scrollable = false)
             .cancelable(false)
+        progress?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))//TODO сделать фон прозрачным
 
         when (intent.getStringExtra(TYPE_ACTIVITY)) {
             SEARCH_WEATHER -> replaceFragmentWithAnimation(
