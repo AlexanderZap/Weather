@@ -2,11 +2,11 @@ package ru.zapashnii.weather.presentation.ui.start_fragment
 
 import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 import ru.zapashnii.weather.di.MainApp
+import ru.zapashnii.weather.domain.model.ItemListParams
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.navigation.ViewRouter
 import javax.inject.Inject
 
@@ -18,14 +18,45 @@ class StartViewModel(
     private var _isGetLastLocation = MutableLiveData(false)
     var isGetLastLocation: LiveData<Boolean> = _isGetLastLocation
 
+    /** Url изображения погодных условий */
+    private var _tvCity = MutableLiveData("Выберите город")
+    var tvCity: LiveData<String> = _tvCity
+
     /** Нажатие на кнопку поиск погоды по GPS */
     fun clickFindByGPS() {
         _isGetLastLocation.value = true
     }
 
-    /** Нажатие на кнопку поиск погоды по названию города */
+    /** Нажатие на выбор города */
     fun clickFindByCity() {
-        openWeatherByCity("Краснодар")
+        viewModelScope.launch {
+            val city = selectSharingType() ?: return@launch
+            openWeatherByCity(city)
+        }
+    }
+
+    /**
+     * Подготавливает параметры для отображения всплывающего меню BottomSheetDialogFragment
+     *
+     * @return      Возвращает номер выбранного элемента
+     */
+    private suspend fun selectSharingType(): String? {
+        val city1 = ListItemField(
+            title = "Москва",
+        )
+
+        val city2 = ListItemField(
+            title = "Краснодар",
+        )
+
+        val items = listOf(city1, city2)
+
+        val params = ItemListParams(
+            title = "Города",
+            items = items
+        )
+
+        return viewRouter.selectItemList(params)?.title
     }
 
     /**
@@ -45,7 +76,7 @@ class StartViewModel(
     /** Показать окно с просьбой включения GPS */
     fun requestLocationEnabled() {
         //TODO вынести в viewRouter
-        Toast.makeText(MainApp.instance.applicationContext, "включи GPS pls", LENGTH_SHORT).show()
+        Toast.makeText(MainApp.instance.applicationContext, "включите GPS пожалуйста", LENGTH_SHORT).show()
     }
 
     /** Фабрика [StartViewModel] */
