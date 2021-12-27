@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <style name="BaseButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textColor">@color/white</item>
         <item name="android:insetTop">0dp</item>
@@ -14,11 +13,6 @@
 
     <style name="Button" parent="BaseButton">
         <item name="android:background">@drawable/background_button_default</item>
-    </style>
-
-    <style name="SearchViewStyle">
-        <item name="android:colorControlNormal">@color/colorPrimaryDark</item>
-        <item name="searchViewStyle">@style/Widget.AppCompat.SearchView</item>
     </style>
 
     <style name="Header6" parent="android:Widget.Material.TextView">
