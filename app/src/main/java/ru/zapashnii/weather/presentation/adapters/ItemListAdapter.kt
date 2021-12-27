@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.ItemListFieldBinding
-import ru.zapashnii.weather.domain.model.IListItemField
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.utils.Utils
 import ru.zapashnii.weather.utils.setCountdownOnClickListener
 import ru.zapashnii.weather.utils.setTintColor
@@ -17,10 +17,10 @@ import ru.zapashnii.weather.utils.setTintColor
  * @property onSelected     нажатие на элемет
  */
 class ItemListAdapter(
-    val onSelected: ((listItemField: IListItemField) -> Unit)
+    val onSelected: ((listItemField: ListItemField) -> Unit)
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items = listOf<IListItemField>()
+    private var items = listOf<ListItemField>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -41,7 +41,7 @@ class ItemListAdapter(
      *
      * @param data          список с данными
      */
-    fun setData(data: List<IListItemField>) {
+    fun setData(data: List<ListItemField>) {
         items = data
         notifyDataSetChanged()
     }
@@ -50,7 +50,7 @@ class ItemListAdapter(
     class ItemChooserViewHolder(private val binding: ItemListFieldBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: IListItemField, onSelected: (listItemField: IListItemField) -> Unit) {
+        fun bind(item: ListItemField, onSelected: (listItemField: ListItemField) -> Unit) {
             item.let {
                 setTitle(it)
                 setSubtitle(it)
@@ -63,18 +63,18 @@ class ItemListAdapter(
         /**
          * Установить заголовок
          *
-         * @param item  [IListItemField]
+         * @param item  [ListItemField]
          */
-        private fun setTitle(item: IListItemField) {
+        private fun setTitle(item: ListItemField) {
             binding.itemTitle.text = item.title
         }
 
         /**
          * Установить подзаголовок
          *
-         * @param item  [IListItemField]
+         * @param item  [ListItemField]
          */
-        private fun setSubtitle(item: IListItemField) {
+        private fun setSubtitle(item: ListItemField) {
             if (!item.subtitle.isNullOrBlank()) {
                 binding.itemSubtitle.text = item.subtitle
                 binding.itemSubtitle.visibility = View.VISIBLE
@@ -87,9 +87,9 @@ class ItemListAdapter(
         /**
          * Установить иконку
          *
-         * @param item  [IListItemField]
+         * @param item  [ListItemField]
          */
-        private fun setIcon(item: IListItemField) {
+        private fun setIcon(item: ListItemField) {
             when {
                 item.iconRes != null -> item.iconRes?.let { binding.itemIcon.setImageResource(it) }
                 !item.iconUrl.isNullOrBlank() -> item.iconUrl?.let { binding.itemIcon.loadImage(it) }
@@ -103,9 +103,9 @@ class ItemListAdapter(
         /**
          * Установить цвет
          *
-         * @param item  [IListItemField]
+         * @param item  [ListItemField]
          */
-        private fun setColor(item: IListItemField) {
+        private fun setColor(item: ListItemField) {
             val colorIcon = item.colorIcon ?: return
             val colorTitle = item.colorTitle ?: return
             val colorSubtitle = item.colorSubtitle ?: return
@@ -126,11 +126,11 @@ class ItemListAdapter(
         /**
          * Добавить слушатель нажатия
          *
-         * @param item  [IListItemField]
+         * @param item  [ListItemField]
          */
         private fun setOnClickListener(
-            item: IListItemField,
-            onSelected: (listItemField: IListItemField) -> Unit
+            item: ListItemField,
+            onSelected: (listItemField: ListItemField) -> Unit
         ) {
             binding.root.isClickable = true
             binding.root.setCountdownOnClickListener { onSelected(item) }

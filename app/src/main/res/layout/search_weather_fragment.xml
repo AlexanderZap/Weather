@@ -39,21 +39,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <SearchView
+        <TextView
             android:id="@+id/searchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="4dp"
-            android:theme="@style/SearchViewStyle"
+            android:onClick="@{() -> viewModel.onChoiceCityClicked()}"
+            app:drawableStartCompat="@drawable/ic_search"
             app:layout_constraintEnd_toEndOf="@id/iconInfo"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
-            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            android:textAlignment="center"
+            app:text="@{viewModel.tvCity}" />
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="16dp"
             app:cardUseCompatPadding="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,23 +66,13 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:id="@+id/ivCity"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.80"
-                    android:scaleType="centerCrop"
-                    tools:layout_editor_absoluteX="49dp"
-                    tools:layout_editor_absoluteY="137dp" />
+                android:layout_height="match_parent"
+                android:layout_margin="16dp">
 
                 <TextView
                     android:id="@+id/tvCity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
                     android:textColor="@color/secondaryTextColor"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -90,8 +85,8 @@
                     android:id="@+id/tvCountry"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secondaryTextColor"
                     android:layout_marginBottom="16dp"
+                    android:textColor="@color/secondaryTextColor"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/tvCity"
@@ -100,17 +95,53 @@
                     tools:text="Russia" />
 
                 <ru.zapashnii.weather.presentation.glide_image_view.GlideImageView
-                    android:id="@+id/item_icon"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginEnd="16dp"
+                    android:id="@+id/itemIcon"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:scaleType="fitCenter"
                     android:visibility="visible"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvCity"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/tvCity"
                     app:srcCompat="@drawable/ic_baseline_info_24"
                     bind:imageUrl="@{viewModel.imageUrl}" />
+
+
+                <TextView
+                    android:id="@+id/tvTemp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="32sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tvCountry"
+                    app:layout_constraintTop_toBottomOf="@+id/tvCountry"
+                    app:text="@{viewModel.tvTemp}"
+                    tools:text="0" />
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tvFeelsLike"
+                    app:layout_constraintTop_toBottomOf="@+id/tvFeelsLike"
+                    app:text="@{viewModel.tvDescription}"
+                    tools:text="Дождь" />
+
+                <TextView
+                    android:id="@+id/tvFeelsLike"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/secondaryTextColor"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/tvTemp"
+                    app:layout_constraintTop_toBottomOf="@+id/tvTemp"
+                    app:text="@{viewModel.tvFeelsLike}"
+                    tools:text="Ощущается как -1" />
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>
 

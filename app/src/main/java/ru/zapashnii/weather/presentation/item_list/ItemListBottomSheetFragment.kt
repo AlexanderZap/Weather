@@ -14,7 +14,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.databinding.BottomSheetItemListBinding
-import ru.zapashnii.weather.domain.model.IListItemField
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.utils.Utils
@@ -30,7 +30,7 @@ class ItemListBottomSheetFragment : BottomSheetDialogFragment() {
     private lateinit var behavior: BottomSheetBehavior<View>
 
     private var adapter = ItemListAdapter(
-        onSelected = { listItemField: IListItemField ->
+        onSelected = { listItemField: ListItemField ->
             binding?.viewModel?.onSelected(listItemField)
             dismiss()
         }
@@ -180,9 +180,9 @@ class ItemListBottomSheetFragment : BottomSheetDialogFragment() {
 
     /**
      * Показать список элементов
-     * @param items список элементов типа [IListItemField]
+     * @param items список элементов типа [ListItemField]
      */
-    private fun showItems(items: List<IListItemField>) {
+    private fun showItems(items: List<ListItemField>) {
         adapter.setData(items)
     }
 

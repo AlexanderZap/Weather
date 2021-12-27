@@ -19,7 +19,7 @@ data class ItemListParams(
     val imageUrl: String? = null,
     val headerColor: Int? = null,
     val isNeedSowSearchField: Boolean = false,
-    val items: List<IListItemField>,
+    val items: List<ListItemField>,
     var onCanceled: (() -> Unit)? = null,
-    var onItemSelected: ((item: IListItemField) -> Unit)? = null,
+    var onItemSelected: ((item: ListItemField) -> Unit)? = null,
 )

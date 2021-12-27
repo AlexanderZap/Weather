@@ -17,7 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import ru.zapashnii.weather.utils.inputmask.MaskedTextChangedListener
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.di.MainApp
-import ru.zapashnii.weather.domain.model.IListItemField
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.presentation.adapters.WeatherAdapter
@@ -205,12 +205,12 @@ fun mask(view: EditText, format: String) {
 }
 
 /**
- * Адаптер для биндинга в RecyclerView списка [IListItemField]
+ * Адаптер для биндинга в RecyclerView списка [ListItemField]
  * @param view      RecyclerView
- * @param items     список элементов [IListItemField] для отображения
+ * @param items     список элементов [ListItemField] для отображения
  */
 @BindingAdapter("bind:items")
-fun setItems(view: RecyclerView, items: List<IListItemField>) {
+fun setItems(view: RecyclerView, items: List<ListItemField>) {
     (view.adapter as ItemListAdapter).setData(items)
 }
 

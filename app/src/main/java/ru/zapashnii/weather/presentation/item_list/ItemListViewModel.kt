@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import ru.zapashnii.weather.domain.model.IListItemField
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 
 /**
@@ -25,8 +25,8 @@ class ItemListViewModel : ViewModel() {
      * Подписаться на список элементов. Можно использовать в связке с BindingAdapter("bind:items")
      * @return  LiveData со списком элементов
      */
-    fun getItemList(): LiveData<List<IListItemField>> {
-        val result = MediatorLiveData<List<IListItemField>>()
+    fun getItemList(): LiveData<List<ListItemField>> {
+        val result = MediatorLiveData<List<ListItemField>>()
 
         val onChanged = {
             val queryStr = queryLD.value?.trim()
@@ -50,7 +50,7 @@ class ItemListViewModel : ViewModel() {
      *
      * @param item  выбранный элемент
      */
-    fun onSelected(item: IListItemField) {
+    fun onSelected(item: ListItemField) {
         params?.onCanceled = null
         params?.onItemSelected?.invoke(item)
     }

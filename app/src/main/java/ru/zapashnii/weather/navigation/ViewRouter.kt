@@ -9,7 +9,7 @@ import android.widget.Toast
 import android.widget.Toast.LENGTH_SHORT
 import androidx.core.app.ActivityCompat
 import ru.zapashnii.weather.di.MainApp
-import ru.zapashnii.weather.domain.model.IListItemField
+import ru.zapashnii.weather.domain.model.ListItemField
 import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.presentation.dialog.SingleDialog
 import ru.zapashnii.weather.presentation.item_list.ItemListBottomSheetFragment
@@ -118,10 +118,10 @@ class ViewRouter @Inject constructor() {
      */
     fun showItemList(
         title: Int,
-        items: List<IListItemField>,
+        items: List<ListItemField>,
         isNeedSowSearchField: Boolean = false,
         onCanceled: (() -> Unit)? = null,
-        onItemSelected: ((item: IListItemField) -> Unit)? = null
+        onItemSelected: ((item: ListItemField) -> Unit)? = null
     ) {
         showItemList(
             Utils.getString(title),
@@ -142,10 +142,10 @@ class ViewRouter @Inject constructor() {
      */
     fun showItemList(
         title: String,
-        items: List<IListItemField>,
+        items: List<ListItemField>,
         isNeedSowSearchField: Boolean = false,
         onCanceled: (() -> Unit)? = null,
-        onItemSelected: ((item: IListItemField) -> Unit)? = null
+        onItemSelected: ((item: ListItemField) -> Unit)? = null
     ) {
         val params = ItemListParams(
             title = title,
@@ -164,13 +164,13 @@ class ViewRouter @Inject constructor() {
      */
     fun showItemList(
         params: ItemListParams,
-        onItemSelected: ((item: IListItemField) -> Unit)? = null
+        onItemSelected: ((item: ListItemField) -> Unit)? = null
     ) {
         onItemSelected?.let { params.onItemSelected = it }
         currentActivity?.showBottomSheet(ItemListBottomSheetFragment.newInstance(params))
     }
 
-    suspend fun selectItemList(params: ItemListParams): IListItemField? {
+    suspend fun selectItemList(params: ItemListParams): ListItemField? {
         return suspendCoroutine { continuation ->
             params.onItemSelected = { continuation.resume(it) }
             params.onCanceled = { continuation.resume(null) }

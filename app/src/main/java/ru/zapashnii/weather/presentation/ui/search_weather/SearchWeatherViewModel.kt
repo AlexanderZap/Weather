@@ -6,10 +6,13 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.launch
+import ru.zapashnii.weather.R
 import ru.zapashnii.weather.const.METRIC
 import ru.zapashnii.weather.const.RU
 import ru.zapashnii.weather.domain.interactors.weather_by_city_name.IWeatherByCityNameUseCase
 import ru.zapashnii.weather.domain.model.GetWeatherRequest
+import ru.zapashnii.weather.domain.model.ListItemField
+import ru.zapashnii.weather.domain.model.ItemListParams
 import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.navigation.ViewRouter
 
@@ -20,8 +23,8 @@ class SearchWeatherViewModel(
 ) : ViewModel() {
 
     /** Погода */
-    private var _listWeather = MutableLiveData<Weather>()
-    var listWeather: LiveData<Weather> = _listWeather
+    private var _weather = MutableLiveData<Weather>()
+    var weather: LiveData<Weather> = _weather
 
     /** Url изображения погодных условий */
     private var _imageUrl = MutableLiveData<String>()
@@ -35,31 +38,99 @@ class SearchWeatherViewModel(
     private var _tvCountry = MutableLiveData("")
     var tvCountry: LiveData<String> = _tvCountry
 
+    /** Описание погоды */
+    private var _tvDescription = MutableLiveData("")
+    var tvDescription: LiveData<String> = _tvDescription
+
+    /** Температура */
+    private var _tvTemp = MutableLiveData("")
+    var tvTemp: LiveData<String> = _tvTemp
+
+    /** Ощущается как */
+    private var _tvFeelsLike = MutableLiveData("")
+    var tvFeelsLike: LiveData<String> = _tvFeelsLike
+
     /** Загрузить всю необходимую информацию */
     @MainThread
     fun loadData() {
         viewModelScope.launch {
-            viewRouter.showProgressAsync()
-            _listWeather.value = weatherByCityNameUseCase.getWeatherByCityName(
+            getWeatherByCityName(
                 getWeatherRequest = GetWeatherRequest(
                     name = cityName,
                     units = METRIC,
                     lang = RU
                 )
             )
-
-            _imageUrl.value =
-                "https://openweathermap.org/img/wn/${_listWeather.value?.weather?.get(0)?.icon}@2x.png"
-
-            _tvCity.value = _listWeather.value?.name
-            _tvCountry.value = when (_listWeather.value?.sys?.country) {
-                "ru", "RU" -> "Россия"
-                "us", "US" -> "Великобритания"
-                else -> ""
-            }
-
-            viewRouter.hideProgressAsync()
         }
+    }
+
+    /**
+     * Получить погоду
+     *
+     * @param getWeatherRequest Параметры для получения информации о погоде
+     */
+    private suspend fun getWeatherByCityName(getWeatherRequest: GetWeatherRequest) {
+        viewRouter.showProgressAsync()
+
+        _weather.value = weatherByCityNameUseCase.getWeatherByCityName(
+            getWeatherRequest = getWeatherRequest
+        )
+
+        _imageUrl.value =
+            "https://openweathermap.org/img/wn/${_weather.value?.weather?.get(0)?.icon}@2x.png"
+
+        _tvCity.value = _weather.value?.name
+        _tvCountry.value = when (_weather.value?.sys?.country) {
+            "ru", "RU" -> "Россия"
+            "us", "US" -> "Великобритания"
+            else -> ""
+        }
+
+        _tvTemp.value = "${_weather.value?.main?.temp} °C"
+
+        _tvFeelsLike.value = "Ощущается как ${_weather.value?.main?.feels_like} °C,"
+
+        _tvDescription.value = _weather.value?.weather?.get(0)?.description
+
+        viewRouter.hideProgressAsync()
+    }
+
+    /** Нажатие на выбор города */
+    fun onChoiceCityClicked() {
+        viewModelScope.launch {
+            val city = selectSharingType() ?: return@launch
+            getWeatherByCityName(
+                getWeatherRequest = GetWeatherRequest(
+                    name = city,
+                    units = METRIC,
+                    lang = RU
+                )
+            )
+        }
+    }
+
+    /**
+     * Подготавливает параметры для отображения всплывающего меню BottomSheetDialogFragment
+     *
+     * @return      Возвращает номер выбранного элемента
+     */
+    private suspend fun selectSharingType(): String? {
+        val city1 = ListItemField(
+            title = "Москва",
+        )
+
+        val city2 = ListItemField(
+            title = "Краснодар",
+        )
+
+        val items = listOf(city1, city2)
+
+        val params = ItemListParams(
+            title = "Города",
+            items = items
+        )
+
+        return viewRouter.selectItemList(params)?.title
     }
 
     /** Нажатие на иконку инфо перенаправляющая на сайт openweathermap */

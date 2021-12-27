@@ -24,7 +24,7 @@ class SearchWeatherFragment : Fragment() {
         }
     }
 
-    private lateinit var cityName: String
+    private var cityName: String = ""
 
     private var binding: SearchWeatherFragmentBinding? = null
 
