@@ -6,8 +6,11 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Base64
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,7 +21,8 @@ import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import ru.zapashnii.weather.R
 import ru.zapashnii.weather.di.MainApp
-import java.lang.NumberFormatException
+import ru.zapashnii.weather.utils.inputmask.helper.Mask
+import ru.zapashnii.weather.utils.inputmask.model.CaretString
 
 /**
  * Проверка Доступны ли сервисы Google Play
@@ -36,6 +40,7 @@ fun Context.isGooglePlayServicesAvailable(): Boolean {
 /**
  * Безопасно преобразовать [String] в [Double].
  * Удаляет лишние буквы и символы, заменяет запятую на точку.
+ *
  * @return  число типа [Double]
  */
 fun String.convertToDouble(): Double {
@@ -99,11 +104,16 @@ fun String.copyInClipboard(label: String) {
     val clipData = ClipData.newPlainText(label, this)
     clipboardManager.setPrimaryClip(clipData)
 
-    Toast.makeText(context, context.getString(R.string.text_copied_to_clipboard), Toast.LENGTH_SHORT).show()
+    Toast.makeText(
+        context,
+        context.getString(R.string.text_copied_to_clipboard),
+        Toast.LENGTH_SHORT
+    ).show()
 }
 
 /**
  * Установить текст и показать TextView, если текс не пустой и не null.
+ *
  * @param text  текст, устанавливаемый в TextView.
  */
 fun TextView.setTextOrHide(text: String?) {
@@ -131,4 +141,46 @@ fun ImageView.setTintColorRes(@ColorRes color: Int) {
  */
 fun ImageView.setTintColor(@ColorInt color: Int) {
     this.imageTintList = ColorStateList.valueOf(color)
+}
+
+/**
+ * Форматировать сумму в сумма + [currency]
+ *
+ * @param currency  валюта
+ * @return          измененная строка
+ */
+fun String.formatMoney(currency: String): String {
+    return if (this.isEmpty()) ""
+    else "%,.2f $currency".format(this.convertToDouble())
+}
+
+/**  Добавляет TextWatcher для EditText и позволяет реализовать только нужные вызовы методоа */
+fun EditText?.setTextChangedListener(
+    beforeTextChanged: ((s: CharSequence?, start: Int, count: Int, after: Int) -> Unit)? = null,
+    onTextChanged: ((s: CharSequence?, start: Int, before: Int, count: Int) -> Unit)? = null,
+    afterTextChanged: ((Editable?) -> Unit)? = null
+) {
+    this?.addTextChangedListener(object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            beforeTextChanged?.let { it.invoke(s, start, count, after) }
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            onTextChanged?.let { it.invoke(s, start, before, count) }
+        }
+
+        override fun afterTextChanged(editable: Editable?) {
+            afterTextChanged?.let { it.invoke(editable) }
+        }
+    })
+}
+
+/**
+ * Формотировать строку под телефон
+ *
+ * @param maskPhone маска по умолчанию "+[0] ([000]) [000]-[00]-[0000]"
+ * @return          измененная строка
+ */
+fun String.formatPhone(maskPhone: Mask = Mask("+[0] ([000]) [000]-[00]-[0000]")): String {
+    return maskPhone.apply(CaretString(this, this.length, CaretString.CaretGravity.FORWARD(true))).formattedText.string
 }
