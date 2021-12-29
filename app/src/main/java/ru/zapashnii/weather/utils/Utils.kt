@@ -15,6 +15,8 @@ import androidx.annotation.StringRes
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.FragmentActivity
 import ru.zapashnii.weather.di.MainApp
+import ru.zapashnii.weather.utils.inputmask.helper.Mask
+import ru.zapashnii.weather.utils.inputmask.model.CaretString
 import java.util.*
 
 /** Утилиты */
@@ -132,5 +134,45 @@ object Utils {
      */
     fun getColor(@ColorRes id: Int): Int {
         return MainApp.instance.getColor(id)
+    }
+
+    /**
+     * Преоброзовать номер телефона в маску +[0] ([000]) [000]-[00]-[00]
+     *
+     * @param phoneNumber   номер телефона
+     * @return              измененная строка
+     */
+    fun formatPhoneNumber(phoneNumber: String): String {
+        return formatText(phoneNumber, Mask("+[0] ([000]) [000]-[00]-[00]"))
+    }
+
+    /**
+     * Преоброзовать строку [text] в маску [mask]
+     *
+     * @param text      строка
+     * @param mask      маска
+     * @return          измененная строка
+     */
+    fun formatText(text: String, mask: Mask): String {
+        return try {
+            val caretString = CaretString(text, text.length, CaretString.CaretGravity.FORWARD(true))
+            val result = mask.apply(caretString)
+            val output = result.formattedText.string
+
+            output
+        } catch (ex: Exception) {
+            text
+        }
+    }
+
+    /**
+     * Спрятать клавиатуру
+     *
+     * @param context   [Context]
+     * @param view      [View]
+     */
+    fun hideSoftKeyboardFrom(context: Context, view: View) {
+        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
