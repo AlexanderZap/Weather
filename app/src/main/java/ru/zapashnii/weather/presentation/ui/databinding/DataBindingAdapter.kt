@@ -2,7 +2,10 @@ package ru.zapashnii.weather.presentation.ui.databinding
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
 import android.view.View
+import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
@@ -13,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import ru.zapashnii.weather.utils.inputmask.MaskedTextChangedListener
 import ru.zapashnii.weather.R
@@ -22,6 +26,8 @@ import ru.zapashnii.weather.domain.model.Weather
 import ru.zapashnii.weather.presentation.adapters.ItemListAdapter
 import ru.zapashnii.weather.presentation.adapters.WeatherAdapter
 import ru.zapashnii.weather.presentation.glide_image_view.GlideImageView
+import ru.zapashnii.weather.utils.Utils
+import ru.zapashnii.weather.utils.setCountdownOnClickListener
 import ru.zapashnii.weather.utils.toBitmapFromBase64
 
 /**
@@ -61,7 +67,11 @@ fun setItemsInRecyclerView(view: RecyclerView, data: List<Weather?>?) {
 @BindingAdapter("bind:itemsSpinnerWeather")
 fun setItemsInSpinner(view: TextInputLayout, items: List<String>?) {
     val adapter =
-        ArrayAdapter(MainApp.instance.applicationContext, R.layout.list_item_for_cash_back, items ?: listOf())
+        ArrayAdapter(
+            MainApp.instance.applicationContext,
+            R.layout.list_item_for_cash_back,
+            items ?: listOf()
+        )
     (view.editText as? AutoCompleteTextView)?.setAdapter(adapter)
 }
 
@@ -83,14 +93,22 @@ fun setScrollListener(view: AutoCompleteTextView, onClick: (value: String) -> Un
 fun observeDownloadingState(view: FloatingActionButton, isDownloadingState: Boolean) {
     if (isDownloadingState) {
         view.setImageResource(R.drawable.ic_round_sync_24)
-        view.startAnimation(AnimationUtils.loadAnimation(MainApp.instance.applicationContext,
-            R.anim.rotete_loop))
+        view.startAnimation(
+            AnimationUtils.loadAnimation(
+                MainApp.instance.applicationContext,
+                R.anim.rotete_loop
+            )
+        )
         view.alpha = 0.6F
         view.isEnabled = false
     } else {
         view.setImageResource(R.drawable.ic_share_white_24dp)
-        view.startAnimation(AnimationUtils.loadAnimation(MainApp.instance.applicationContext,
-            R.anim.icon_shaking))
+        view.startAnimation(
+            AnimationUtils.loadAnimation(
+                MainApp.instance.applicationContext,
+                R.anim.icon_shaking
+            )
+        )
         view.alpha = 1.0F
         view.isEnabled = true
     }
@@ -247,4 +265,143 @@ fun alphaAnimation(view: View, targetAlpha: Float, duration: Long = 300L) {
     view.apply {
         animate().alpha(targetAlpha).setDuration(duration).start()
     }
+}
+
+/**
+ * Слушатель с блокировкой двойного нажатия. Плюс прячет клавиатуру.
+ * @param view      view, для которой устанавливается слушатель.
+ * @param onClick   действие при нажатии.
+ */
+@BindingAdapter("bind:onCountdownClickAndHideKeyboard")
+fun setCountdownOnClickAndHideKeyboard(view: View, onClick: () -> Unit) {
+    view.setCountdownOnClickListener {
+        Utils.hideSoftKeyboardFrom(view.context, view)
+        onClick.invoke()
+    }
+}
+
+/**
+ * Установить текст ошибки в [TextInputLayout]
+ * @param error     текст ошибки
+ */
+@BindingAdapter("bind:error")
+fun setErrorText(view: TextInputLayout, error: String?) {
+    view.error = error
+}
+
+/**
+ * Установить текст подсказки в [TextInputLayout]
+ * @param helperText     текст подсказки
+ */
+@BindingAdapter("bind:helperText")
+fun setHelperText(view: TextInputLayout, helperText: String?) {
+    view.helperText = helperText
+}
+
+/**
+ * Установить текст с анимацией затухания и плавного появления.
+ * @param text     устанавливаемый текст.
+ */
+@BindingAdapter("bind:textOrHideWithAnimation")
+fun setTextOrHideWithAnimation(view: TextInputEditText, text: String?) {
+    if (view.text.toString() == text) {
+        // Чтобы работало для TextInputEditText оставить метод setText(String) (не использовать view.text = text)
+        view.setText(text)
+    } else {
+        setViewContentWithAnimation(view) {
+            // Чтобы работало для TextInputEditText оставить метод setText(String) (не использовать view.text = text))
+            (view.parent as ViewGroup).visibility =
+                if (text.isNullOrEmpty()) View.GONE else View.VISIBLE
+            view.setText(text)
+        }
+    }
+}
+
+/**
+ * Выполняет анимацию затухания выполняет переданную функцию и плавно отображает вью
+ * @param view                  анимируемая вью
+ * @param onHideAnimationEnd    действие выполняемое после затухания
+ */
+private fun setViewContentWithAnimation(view: View, onHideAnimationEnd: () -> Unit) {
+    val fadeStart = ObjectAnimator.ofFloat(view, "alpha", 1f, 0f).apply {
+        duration = 200L
+        addListener(object : AnimatorListenerAdapter() {
+            override fun onAnimationEnd(animation: Animator) {
+                onHideAnimationEnd.invoke()
+            }
+        })
+    }
+    val fadeEnd = ObjectAnimator.ofFloat(view, "alpha", 0f, 1f).apply {
+        duration = 200L
+    }
+
+    AnimatorSet().apply {
+        play(fadeEnd).after(fadeStart)
+        start()
+    }
+}
+
+/**
+ * Анимированно показать View
+ * @param view          анимируемое View
+ * @param duration      длительность анимации
+ */
+fun showWithAnimation(view: View, duration: Long = 300L) {
+    if (view.visibility == View.VISIBLE) return
+    view.apply {
+        alpha = 0f
+        animate()
+            .alpha(1f)
+            .setDuration(duration)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationStart(animation: Animator?) {
+                    visibility = View.VISIBLE
+                }
+            })
+            .start()
+    }
+}
+
+/**
+ * Анимированно спрятать View
+ * @param view          анимируемое View
+ * @param duration      длительность анимации
+ */
+fun hideWithAnimation(view: View, duration: Long = 300L) {
+    if (view.visibility == View.GONE) return
+    view.apply {
+        alpha = 1f
+        animate()
+            .alpha(0f)
+            .setDuration(duration)
+            .setListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    visibility = View.GONE
+                }
+            })
+            .start()
+    }
+}
+
+/**
+ * Установить видимость всей View анимированно.
+ * @param isVisible     TRUE - видимо, FALSE - невидимо
+ */
+@BindingAdapter("bind:visibilityWithAnimation")
+fun setVisibilityWithAnimation(view: View, isVisible: Boolean) {
+    if (isVisible)
+        showWithAnimation(view)
+    else
+        hideWithAnimation(view)
+
+}
+
+/**
+ * Слушатель с блокировкой двойного нажатия.
+ * @param view      view, для которой устанавливается слушатель.
+ * @param action    действие при нажатии.
+ */
+@BindingAdapter("bind:countDownOnClick")
+fun setCountDownOnClick(view: View, action: () -> Unit) {
+    view.setCountdownOnClickListener { action.invoke() }
 }
