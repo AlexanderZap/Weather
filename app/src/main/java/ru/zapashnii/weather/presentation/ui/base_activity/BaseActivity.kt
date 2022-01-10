@@ -114,7 +114,7 @@ class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * Создать фрагмент с анимцией
+     * Создать фрагмент с анимцией движения(смахивания) слева направо
      *
      * @param fragment
      */
@@ -131,7 +131,7 @@ class BaseActivity : AppCompatActivity() {
     }
 
     /**
-     * Подменить фрагмент с анимацией
+     * Подменить фрагмент с анимацией движения(смахивания) слева направо
      *
      * @param fragment
      */
@@ -140,6 +140,38 @@ class BaseActivity : AppCompatActivity() {
         supportFragmentManager
             .beginTransaction()
             .setCustomAnimations(R.anim.enter, 0, 0, R.anim.pop_exit)
+            .replace(R.id.mainContainer, fragment, tag + fragmentsStack)
+            .addToBackStack(tag + fragmentsStack)
+            .commitAllowingStateLoss()
+    }
+
+    /**
+     * Подменить фрагмент с анимацией движения(смахивания) сверху вниз
+     *
+     * @param fragment
+     */
+    fun addFragmentWithSlideAnimation(fragment: Fragment) {
+        Utils.hideSoftKeyboard(this)
+        fragmentsStack++
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.enter_up, 0, 0, R.anim.exit_down)
+            .add(R.id.mainContainer, fragment, tag + fragmentsStack)
+            .addToBackStack(tag + fragmentsStack)
+            .commitAllowingStateLoss()
+    }
+
+    /**
+     * Подменить фрагмент с анимацией движения(смахивания) сверху вниз
+     *
+     * @param fragment
+     */
+    fun replaceFragmentWithSlideAnimation(fragment: Fragment) {
+        Utils.hideSoftKeyboard(this)
+        fragmentsStack++
+        supportFragmentManager
+            .beginTransaction()
+            .setCustomAnimations(R.anim.enter_up, 0, 0, R.anim.exit_down)
             .replace(R.id.mainContainer, fragment, tag + fragmentsStack)
             .addToBackStack(tag + fragmentsStack)
             .commitAllowingStateLoss()
