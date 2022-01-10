@@ -45,6 +45,9 @@ class SearchWeatherFragment : Fragment() {
 
         binding = DataBindingUtil.bind(view)
 
+        // Для view binding
+        // binding = SearchWeatherFragmentBinding.bind(view)
+
         binding?.viewModel = viewModel
         binding?.lifecycleOwner = viewLifecycleOwner
 
