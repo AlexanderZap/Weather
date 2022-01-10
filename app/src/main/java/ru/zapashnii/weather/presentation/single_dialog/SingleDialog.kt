@@ -1,4 +1,4 @@
-package ru.zapashnii.weather.presentation.dialog
+package ru.zapashnii.weather.presentation.single_dialog
 
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
