@@ -15,6 +15,7 @@ import ru.zapashnii.weather.presentation.single_dialog.SingleDialog
 import ru.zapashnii.weather.presentation.item_list.ItemListBottomSheetFragment
 import ru.zapashnii.weather.presentation.ui.base_activity.BaseActivity
 import ru.zapashnii.weather.utils.Utils
+import ru.zapashnii.weather.utils.annotation.OpenForTest
 import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.coroutines.resume
@@ -25,6 +26,7 @@ const val PERMISSION_ID = 1
 
 /** Клас навигации по приложению */
 @Singleton
+@OpenForTest
 class ViewRouter @Inject constructor() {
 
     companion object {
