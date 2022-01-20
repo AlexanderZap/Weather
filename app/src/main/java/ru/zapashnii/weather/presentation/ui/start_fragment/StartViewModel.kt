@@ -68,7 +68,7 @@ class StartViewModel(
         viewRouter.openWeatherByCity(city)
     }
 
-    /** Метод для навигации запрос разрешения на получения места положения */
+    /** Запросить разрешения на получения местоположения */
     fun requestPermission() {
         viewRouter.requestPermission()
     }

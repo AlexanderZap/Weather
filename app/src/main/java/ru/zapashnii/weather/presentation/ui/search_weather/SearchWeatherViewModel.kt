@@ -174,3 +174,20 @@ class SearchWeatherViewModel(
         ): Factory
     }
 }
+
+
+/*
+fun isValidForm(): LiveData<Boolean> =
+    MediatorLiveData<Boolean>().apply {
+        val onChanged = {
+            this.value = validation()
+        }
+
+        addSource(value0) { onChanged.invoke() }
+        addSource(value1) { onChanged.invoke() }
+        addSource(value2) { onChanged.invoke() }
+    }
+
+private fun validation(): Boolean {
+    return true
+}*/

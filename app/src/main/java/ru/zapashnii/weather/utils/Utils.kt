@@ -175,4 +175,13 @@ object Utils {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
+
+    /**
+     * Проверка разрешений на получения доступа к камере
+     *
+     * @return      True, если есть разрешения
+     */
+    fun checkPermissionCamera(): Boolean =
+        ActivityCompat.checkSelfPermission(MainApp.instance.applicationContext,
+            Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
 }

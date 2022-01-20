@@ -1,5 +1,6 @@
 package ru.zapashnii.weather.navigation
 
+import android.Manifest
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
 import android.content.Intent
@@ -77,6 +78,17 @@ class ViewRouter @Inject constructor() {
                 it,
                 arrayOf(ACCESS_COARSE_LOCATION, ACCESS_FINE_LOCATION),
                 PERMISSION_ID
+            )
+        }
+    }
+
+    /** Запросить разрешения на получения доступа к камере */
+    fun requestPermissionCamera() {
+        currentActivity?.let {
+            ActivityCompat.requestPermissions(
+                it,
+                arrayOf(Manifest.permission.CAMERA),
+                1
             )
         }
     }
