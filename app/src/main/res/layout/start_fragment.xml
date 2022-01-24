@@ -58,3 +58,35 @@
         </LinearLayout>
     </LinearLayout>
 </layout>
+
+<!--
+<com.google.android.material.textfield.TextInputLayout
+style="@style/AppTextInputLayout"
+android:layout_width="wrap_content"
+android:layout_height="wrap_content"
+android:layout_weight="99"
+android:theme="@style/AppTheme">
+
+<EditText
+    android:id="@+id/card_number"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:hint="@string/number_card"
+    android:imeOptions="actionNext"
+    android:inputType="phone"
+    android:maxLines="1"
+    android:singleLine="true"
+    android:textColor="@color/main_text_dark"
+    android:textColorHint="@color/hint"
+    android:textSize="@dimen/dim_16_sp">
+
+    <requestFocus />
+
+ <style name="AppTextInputLayout" parent="Widget.Design.TextInputLayout">
+        <item name="colorControlActivated">@color/colorAccent</item>
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="android:paddingStart">-4dp</item>
+        <item name="android:paddingEnd">-4dp</item>
+    </style>
+</EditText>-->
